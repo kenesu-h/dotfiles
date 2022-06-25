@@ -10,7 +10,10 @@ function oh_my_bash {
 }
 
 function tmux_powerline {
-  git clone https://github.com/erikw/tmux-powerline.git ~/tmux-powerline
+  cd ~/tmux-powerline;
+  git init;
+  git remote add origin https://github.com/erikw/tmux-powerline.git;
+  git pull origin main --allow-unrelated-histories;
 }
 
 vim_plug
