@@ -1,0 +1,18 @@
+#!/bin/bash
+
+function vim_plug {
+  curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim;
+}
+
+function oh_my_bash {
+  git clone https://github.com/ohmybash/oh-my-bash.git ~/.oh-my-bash;
+}
+
+function tmux_powerline {
+  git clone https://github.com/erikw/tmux-powerline.git ~/tmux-powerline
+}
+
+vim_plug
+oh_my_bash
+tmux_powerline
