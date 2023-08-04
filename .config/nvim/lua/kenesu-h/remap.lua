@@ -1,3 +1,5 @@
+vim.g.mapleader = " "
+
 -- thanks to ThePrimeagen (https://www.youtube.com/watch?v=w7i4amO_zaE)
 vim.keymap.set("v", "N", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "B", ":m '<-2<CR>gv=gv")

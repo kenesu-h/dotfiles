@@ -86,6 +86,12 @@ require("lazy").setup({
       require("mini.pairs").setup()
     end,
   },
+  {
+    "ThePrimeagen/harpoon",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+  },
   { "aserowy/tmux.nvim" },
   { "mbbill/undotree" },
   { "anuvyklack/hydra.nvim" },

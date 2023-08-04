@@ -29,10 +29,7 @@ vim.opt.colorcolumn = "100"
 vim.opt.textwidth = 100
 vim.opt.formatoptions = "jcrql"
 
-vim.opt.showtabline = 2
 vim.o.showmode = false
 
 vim.opt.spell = true
 vim.opt.spelllang = "en_us"
-
-vim.g.mapleader = " "

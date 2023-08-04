@@ -3,7 +3,11 @@ local Hydra = require("hydra")
 local hint = [[
 _f_: files          _g_: git
 _s_: grep (search)  _u_: undotree
-_b_: browser        _<Esc>_
+_b_: browser
+
+_h_: harpoon        _m_: mark
+
+                        _<Esc>_
 ]]
 
 local builtin = require("telescope.builtin")
@@ -32,6 +36,10 @@ Hydra({
       end,
     },
     { "u", vim.cmd.UndotreeToggle },
+
+    { "h", require("harpoon.ui").toggle_quick_menu },
+    { "m", require("harpoon.mark").add_file },
+
     { "<Esc>", nil, { exit = true, nowait = true } },
   },
 })
