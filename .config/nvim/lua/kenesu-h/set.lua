@@ -26,6 +26,8 @@ vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "100"
+vim.opt.textwidth = 100
+vim.opt.formatoptions = "jcrql"
 
 vim.opt.showtabline = 2
 vim.o.showmode = false
