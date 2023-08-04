@@ -2,6 +2,7 @@
 
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 git clone --depth=1 https://github.com/mattmc3/antidote.git ${ZDOTDIR:-~}/.antidote
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
 
 # We need versions >= 3.2 to sync the clipboard between tmux and nvim
 zypper -n addrepo https://download.opensuse.org/repositories/home:fsirl:SLE15-Tools/15.5/home:fsirl:SLE15-Tools.repo
