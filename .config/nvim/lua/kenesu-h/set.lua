@@ -23,7 +23,9 @@ vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 
-vim.opt.updatetime = 50
+-- https://www.reddit.com/r/neovim/comments/ry9qxi/lsp_linesnvim_show_diagnostics_using_virtual/hrntw0p/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, { focus = false })]])
+vim.opt.updatetime = 300
 
 vim.opt.colorcolumn = "100"
 vim.opt.textwidth = 100

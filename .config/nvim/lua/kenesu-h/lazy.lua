@@ -76,7 +76,7 @@ require("lazy").setup({
   {
     "ggandor/leap.nvim",
     config = function()
-      require("leap").add_default_mappings(true)
+      require("leap").add_default_mappings()
     end,
   },
   {
@@ -84,6 +84,7 @@ require("lazy").setup({
     version = "*",
     config = function()
       require("mini.pairs").setup()
+      require("mini.surround").setup()
     end,
   },
   {
