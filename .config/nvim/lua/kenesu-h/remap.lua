@@ -11,5 +11,5 @@ vim.keymap.set("n", "N", "Nzzzv")
 
 vim.keymap.set("n", "p", '"0p`]')
 vim.keymap.set("v", "p", '"0p`]')
-vim.keymap.set("v", "d", "_d")
+vim.keymap.set("v", "d", '"_d')
 vim.keymap.set("v", "x", "ygvd")
