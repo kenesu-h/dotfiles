@@ -52,11 +52,6 @@ require("lazy").setup({
 
   -- Git
   {
-    "NeogitOrg/neogit",
-    dependencies = { "nvim-lua/plenary.nvim", "sindrets/diffview.nvim" },
-    config = true,
-  },
-  {
     "lewis6991/gitsigns.nvim",
     config = function()
       require("gitsigns").setup()
@@ -71,12 +66,6 @@ require("lazy").setup({
     },
     config = function()
       require("lualine").setup()
-    end,
-  },
-  {
-    "ggandor/leap.nvim",
-    config = function()
-      require("leap").add_default_mappings()
     end,
   },
   {

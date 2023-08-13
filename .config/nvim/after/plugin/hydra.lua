@@ -1,9 +1,8 @@
 local Hydra = require("hydra")
 
 local hint = [[
-_f_: files          _g_: git
+_f_: files          _b_: browser
 _s_: grep (search)  _u_: undotree
-_b_: browser
 
 _h_: harpoon        _m_: mark
 
@@ -29,12 +28,6 @@ Hydra({
     { "f", builtin.find_files },
     { "s", builtin.live_grep },
     { "b", require("telescope").extensions.file_browser.file_browser },
-    {
-      "g",
-      function()
-        require("neogit").open({ kind = "auto" })
-      end,
-    },
     { "u", vim.cmd.UndotreeToggle },
 
     { "h", require("harpoon.ui").toggle_quick_menu },
