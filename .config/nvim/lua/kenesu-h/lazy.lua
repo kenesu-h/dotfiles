@@ -86,4 +86,5 @@ require("lazy").setup({
   { "mbbill/undotree" },
   { "anuvyklack/hydra.nvim" },
   { "lukas-reineke/indent-blankline.nvim" },
+  { "Pocco81/true-zen.nvim" },
 })
