@@ -19,6 +19,8 @@ export NVM_DIR="$HOME/.nvm"
 PATH="$HOME/.cargo/bin/:$PATH"
 PATH="$HOME/.local/share/bob/nvim-bin/:$PATH"
 
+eval "$(pyenv init -)"
+
 export EDITOR=nvim
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
