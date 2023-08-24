@@ -19,3 +19,5 @@ bob sync
 
 zypper -n install ripgrep
 
+zypper -n install pyenv
+
