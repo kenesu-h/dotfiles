@@ -10,6 +10,7 @@ vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
 vim.keymap.set({ "n", "v" }, "p", "P")
+vim.keymap.set({ "n", "v" }, "gp", "`[v`]")
 vim.keymap.set({ "n", "v" }, "x", "d")
 vim.keymap.set({ "n", "v" }, "d", '"_d')
 
