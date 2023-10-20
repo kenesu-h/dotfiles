@@ -3,6 +3,7 @@ local Hydra = require("hydra")
 local hint = [[
 _f_: files          _b_: browser
 _s_: grep (search)  _u_: undotree
+_d_: diagnostics
 
 _h_: harpoon        _m_: mark
 
@@ -27,6 +28,7 @@ Hydra({
   heads = {
     { "f", builtin.find_files },
     { "s", builtin.live_grep },
+    { "d", require("telescope.builtin").diagnostics },
     { "b", require("telescope").extensions.file_browser.file_browser },
     { "u", vim.cmd.UndotreeToggle },
 
