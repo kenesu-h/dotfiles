@@ -18,6 +18,7 @@ vim.keymap.set({ "n", "v" }, "<C-w>h", ":vsplit<CR> <BAR> :wincmd h<CR>", { nore
 vim.keymap.set({ "n", "v" }, "<C-w>j", ":split<CR> <BAR> :wincmd j<CR>", { noremap = true })
 vim.keymap.set({ "n", "v" }, "<C-w>k", ":split<CR> <BAR> :wincmd k<CR>", { noremap = true })
 vim.keymap.set({ "n", "v" }, "<C-w>l", ":vsplit<CR> <BAR> :wincmd l<CR>", { noremap = true })
+vim.keymap.set({ "n", "v" }, "<C-w>c", ":tab split<CR>", { noremap = true })
 
 -- Function to swap the current split with the next one (to the right or below)
 function SwapWithNextSplit()
