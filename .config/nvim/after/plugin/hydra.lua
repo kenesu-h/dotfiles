@@ -4,6 +4,7 @@ local hint = [[
 _f_: files          _b_: browser
 _s_: grep (search)  _u_: undotree
 _d_: diagnostics
+_r_: rename
 
 _h_: harpoon        _m_: mark
 
@@ -30,6 +31,7 @@ Hydra({
     { "s", builtin.live_grep },
     { "d", require("telescope.builtin").diagnostics },
     { "b", require("telescope").extensions.file_browser.file_browser },
+    { "r", vim.lsp.buf.rename },
     { "u", vim.cmd.UndotreeToggle },
 
     { "h", require("harpoon.ui").toggle_quick_menu },
