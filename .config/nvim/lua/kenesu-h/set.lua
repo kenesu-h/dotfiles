@@ -27,8 +27,8 @@ vim.opt.isfname:append("@-@")
 vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, { focus = false })]])
 vim.opt.updatetime = 300
 
-vim.opt.colorcolumn = "100"
-vim.opt.textwidth = 100
+vim.opt.colorcolumn = "120"
+vim.opt.textwidth = 120
 vim.opt.formatoptions = "jcrql"
 
 vim.o.showmode = false

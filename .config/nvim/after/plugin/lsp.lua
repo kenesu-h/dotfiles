@@ -10,13 +10,9 @@ lsp.setup()
 require("mason").setup({})
 require("mason-lspconfig").setup({
   ensure_installed = {
-    "dockerls",
-    "gopls",
     "lua_ls",
     "pyright",
-    "rust_analyzer",
     "tsserver",
-    "volar",
   },
 })
 

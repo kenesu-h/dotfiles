@@ -16,6 +16,14 @@ require("lazy").setup({
     "catppuccin/nvim",
     name = "catppuccin",
     priority = 1000,
+    config = function()
+      require("catppuccin").setup({
+        transparent_background = true,
+        no_italic = true,
+      })
+
+      vim.cmd.colorscheme("catppuccin-macchiato")
+    end,
   },
 
   -- Telescope
@@ -50,6 +58,32 @@ require("lazy").setup({
     },
   },
 
+  -- Formatter
+  {
+    "stevearc/conform.nvim",
+    config = function()
+      local conform = require("conform")
+
+      conform.setup({
+        formatters_by_ft = {
+          lua = { "stylua" },
+          python = { "black" },
+          javascript = { "prettier" },
+        },
+        format_on_save = {
+          lsp_fallback = true,
+        },
+      })
+
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        pattern = "*",
+        callback = function(args)
+          conform.format({ bufnr = args.buf })
+        end,
+      })
+    end,
+  },
+
   -- Git
   {
     "lewis6991/gitsigns.nvim",
@@ -57,8 +91,15 @@ require("lazy").setup({
       require("gitsigns").setup()
     end,
   },
+  {
+    "f-person/git-blame.nvim",
+    config = function()
+      vim.g.gitblame_enabled = false
+    end,
+  },
 
   -- Other
+  { "nanozuki/tabby.nvim" },
   {
     "nvim-lualine/lualine.nvim",
     dependencies = {
@@ -72,6 +113,9 @@ require("lazy").setup({
     "ggandor/leap.nvim",
     config = function()
       require("leap").add_default_mappings()
+
+      vim.keymap.set({ "n", "v", "o" }, "f", "<Plug>(leap-forward)", {})
+      vim.keymap.set({ "n", "v", "o" }, "F", "<Plug>(leap-backward)", {})
     end,
   },
   {
@@ -79,9 +123,19 @@ require("lazy").setup({
     version = "*",
     config = function()
       require("mini.comment").setup()
-      require("mini.pairs").setup()
       require("mini.surround").setup()
     end,
+  },
+  {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    opts = {},
+  },
+  {
+    "kevinhwang91/nvim-ufo",
+    dependencies = {
+      "kevinhwang91/promise-async",
+    },
   },
   {
     "ThePrimeagen/harpoon",
@@ -89,9 +143,28 @@ require("lazy").setup({
       "nvim-lua/plenary.nvim",
     },
   },
-  { "aserowy/tmux.nvim" },
+  {
+    "aserowy/tmux.nvim",
+    config = function()
+      require("tmux").setup({
+        copy_sync = {
+          enable = true,
+          redirect_to_clipboard = true,
+        },
+      })
+    end,
+  },
   { "mbbill/undotree" },
   { "anuvyklack/hydra.nvim" },
-  { "lukas-reineke/indent-blankline.nvim" },
-  { "Pocco81/true-zen.nvim" },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    config = function()
+      require("ibl").setup({
+        scope = {
+          show_start = false,
+        },
+      })
+    end,
+  },
 })
