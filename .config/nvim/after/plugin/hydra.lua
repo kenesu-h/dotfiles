@@ -188,6 +188,5 @@ _<Esc>_
 
     { "p", get_activator(project_hydra) },
     { "l", get_activator(lsp_hydra) },
-    { "u", vim.cmd.UndotreeToggle },
   }
 )
