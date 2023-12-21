@@ -100,7 +100,7 @@ require("lazy").setup({
       vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost" }, {
         callback = function()
           lint.try_lint()
-          lint.try_lint("codespell")
+          lint.try_lint("typos")
         end,
       })
     end,
