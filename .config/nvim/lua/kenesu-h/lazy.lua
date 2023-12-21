@@ -63,22 +63,43 @@ require("lazy").setup({
     "stevearc/conform.nvim",
     config = function()
       local conform = require("conform")
+      local js_formatters = { "prettier" }
 
       conform.setup({
         formatters_by_ft = {
           lua = { "stylua" },
-          python = { "black" },
-          javascript = { "prettier" },
+          python = { "isort", "black" },
+          javascript = js_formatters,
+          javascriptreact = js_formatters,
+          typescript = js_formatters,
+          typescriptreact = js_formatters,
         },
-        format_on_save = {
+        format_after_save = {
           lsp_fallback = true,
         },
       })
+    end,
+  },
 
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        pattern = "*",
-        callback = function(args)
-          conform.format({ bufnr = args.buf })
+  -- Linter
+  {
+    "mfussenegger/nvim-lint",
+    config = function()
+      local lint = require("lint")
+      local js_linters = { "eslint" }
+
+      lint.linters_by_ft = {
+        lua = { "luacheck" },
+        python = { "bandit", "flake8" },
+        javascript = js_linters,
+        javascriptreact = js_linters,
+        typescript = js_linters,
+        typescriptreact = js_linters,
+      }
+
+      vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost" }, {
+        callback = function()
+          lint.try_lint()
         end,
       })
     end,
@@ -88,7 +109,11 @@ require("lazy").setup({
   {
     "lewis6991/gitsigns.nvim",
     config = function()
-      require("gitsigns").setup()
+      require("gitsigns").setup({
+        yadm = {
+          enable = true,
+        },
+      })
     end,
   },
   {
@@ -106,6 +131,7 @@ require("lazy").setup({
       "nvim-tree/nvim-web-devicons",
     },
     config = function()
+      ---@diagnostic disable-next-line: missing-parameter
       require("lualine").setup()
     end,
   },
@@ -132,6 +158,17 @@ require("lazy").setup({
     opts = {},
   },
   {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    config = function()
+      require("ibl").setup({
+        scope = {
+          show_start = false,
+        },
+      })
+    end,
+  },
+  {
     "kevinhwang91/nvim-ufo",
     dependencies = {
       "kevinhwang91/promise-async",
@@ -139,6 +176,7 @@ require("lazy").setup({
   },
   {
     "ThePrimeagen/harpoon",
+    branch = "harpoon2",
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
@@ -157,14 +195,28 @@ require("lazy").setup({
   { "mbbill/undotree" },
   { "anuvyklack/hydra.nvim" },
   {
-    "lukas-reineke/indent-blankline.nvim",
-    main = "ibl",
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {},
+  },
+  {
+    "m4xshen/hardtime.nvim",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+    },
     config = function()
-      require("ibl").setup({
-        scope = {
-          show_start = false,
-        },
+      require("hardtime").setup({
+        disable_mouse = false,
       })
     end,
+  },
+  {
+    "folke/neodev.nvim",
+    opts = {},
+  },
+  {
+    "sindrets/winshift.nvim",
+    opts = {},
   },
 })

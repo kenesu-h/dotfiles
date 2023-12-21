@@ -1,10 +1,20 @@
+require("neodev").setup({})
+
 local lsp = require("lsp-zero").preset({})
+local lspconfig = require("lspconfig")
 
 lsp.on_attach(function(_, bufnr)
   lsp.default_keymaps({ buffer = bufnr })
 end)
 
-require("lspconfig").lua_ls.setup(lsp.nvim_lua_ls())
+-- lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
+lspconfig.tsserver.setup({
+  init_options = {
+    preferences = {
+      importModuleSpecifier = "non-relative",
+    },
+  },
+})
 lsp.setup()
 
 require("mason").setup({})
