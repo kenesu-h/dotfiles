@@ -176,7 +176,7 @@ base_hydra(
   [[
 _w_: windows  _p_: project
 _t_: tabs     _l_: lsp
-_g_: git      _u_: undotree
+_g_: git
 
 _<Esc>_
 ]],

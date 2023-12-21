@@ -100,6 +100,7 @@ require("lazy").setup({
       vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost" }, {
         callback = function()
           lint.try_lint()
+          lint.try_lint("codespell")
         end,
       })
     end,
@@ -169,12 +170,6 @@ require("lazy").setup({
     end,
   },
   {
-    "kevinhwang91/nvim-ufo",
-    dependencies = {
-      "kevinhwang91/promise-async",
-    },
-  },
-  {
     "ThePrimeagen/harpoon",
     branch = "harpoon2",
     dependencies = {
@@ -192,7 +187,6 @@ require("lazy").setup({
       })
     end,
   },
-  { "mbbill/undotree" },
   { "anuvyklack/hydra.nvim" },
   {
     "folke/todo-comments.nvim",
