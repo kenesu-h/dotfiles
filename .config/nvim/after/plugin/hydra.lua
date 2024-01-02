@@ -55,11 +55,38 @@ _<Esc>_
 ]],
   nil,
   {
-    { "h", ":vsplit<CR>" },
-    { "j", ":split<CR> <BAR> :wincmd j<CR>" },
-    { "k", ":split<CR>" },
-    { "l", ":vsplit<CR> <BAR> :wincmd l<CR>" },
-    { "s", ":WinShift swap<CR>" },
+    {
+      "h",
+      function()
+        vim.cmd("vsplit")
+      end,
+    },
+    {
+      "j",
+      function()
+        vim.cmd("split")
+        vim.cmd("wincmd j")
+      end,
+    },
+    {
+      "k",
+      function()
+        vim.cmd("split")
+      end,
+    },
+    {
+      "l",
+      function()
+        vim.cmd("vsplit")
+        vim.cmd("wincmd l")
+      end,
+    },
+    {
+      "s",
+      function()
+        vim.cmd("WinShift swap")
+      end,
+    },
   }
 )
 
@@ -74,11 +101,31 @@ _<Esc>_
 ]],
   nil,
   {
-    { "h", ":-tabmove<CR>" },
-    { "c", ":tab split<CR>" },
-    { "x", ":tabclose<CR>" },
+    {
+      "h",
+      function()
+        vim.cmd("-tabmove")
+      end,
+    },
+    {
+      "c",
+      function()
+        vim.cmd("tab split")
+      end,
+    },
+    {
+      "x",
+      function()
+        vim.cmd("tabclose")
+      end,
+    },
 
-    { "l", ":+tabmove<CR>" },
+    {
+      "l",
+      function()
+        vim.cmd("+tabmove")
+      end,
+    },
   }
 )
 
@@ -111,8 +158,18 @@ _<Esc>_
     { "s", builtin.git_status },
 
     { "h", get_activator(hunk_hydra) },
-    { "b", ":GitBlameToggle<CR>" },
-    { "o", ":GitBlameOpenFileURL<CR>" },
+    {
+      "b",
+      function()
+        vim.cmd("GitBlameToggle")
+      end,
+    },
+    {
+      "o",
+      function()
+        vim.cmd("GitBlameOpenFileURL")
+      end,
+    },
   }
 )
 
@@ -137,7 +194,12 @@ _<Esc>_
     },
 
     { "b", require("telescope").extensions.file_browser.file_browser },
-    { "t", ":TodoTelescope<CR>" },
+    {
+      "t",
+      function()
+        vim.cmd("TodoTelescope")
+      end,
+    },
     {
       "m",
       function()

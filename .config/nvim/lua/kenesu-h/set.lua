@@ -31,7 +31,7 @@ vim.opt.colorcolumn = "120"
 vim.opt.textwidth = 120
 vim.opt.formatoptions = "jcrql"
 
-vim.o.showmode = false
+vim.opt.showmode = false
 
 vim.opt.spell = true
 vim.opt.spelllang = "en_us"
