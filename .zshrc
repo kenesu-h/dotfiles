@@ -49,6 +49,13 @@ function node() {
   node $@
 }
 
+# LSPs rely on Node to run
+function nvim() {
+  unset -f nvim
+  lazy_load_nvm
+  nvim $@
+}
+
 function pyenv() {
   unset -f pyenv
   export PYENV_ROOT="$HOME/.pyenv"
