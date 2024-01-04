@@ -106,6 +106,7 @@ _<Esc>_
       function()
         vim.cmd("-tabmove")
       end,
+      { exit = false },
     },
     {
       "c",
@@ -125,6 +126,7 @@ _<Esc>_
       function()
         vim.cmd("+tabmove")
       end,
+      { exit = false },
     },
   }
 )
@@ -148,8 +150,8 @@ local git_hydra = base_hydra(
   "Git",
   [[
 _s_: status  _h_: hunk
-           _b_: blame
-           _o_: open url
+^^           _b_: blame
+^^           _o_: open url
 
 _<Esc>_
 ]],
@@ -212,8 +214,8 @@ _<Esc>_
 local lsp_hydra = base_hydra(
   "LSP",
   [[
-_e_: errors      _n_: re(n)ame
-_d_: definition
+_e_: errors      _n_: name
+_d_: definition  _b_: back
 _r_: references
 
 _<Esc>_
@@ -230,6 +232,17 @@ _<Esc>_
     { "r", builtin.lsp_references },
 
     { "n", vim.lsp.buf.rename },
+    {
+      "b",
+      function()
+        if vim.fn.gettagstack().curidx > 1 then
+          vim.cmd("pop")
+        else
+          print("Tag stack is empty!")
+        end
+      end,
+      { exit = false },
+    },
   }
 )
 

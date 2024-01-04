@@ -89,6 +89,7 @@ require("lazy").setup({
       local js_linters = { "eslint" }
 
       lint.linters_by_ft = {
+        markdown = { "vale" },
         lua = { "luacheck" },
         python = { "bandit", "flake8" },
         javascript = js_linters,
@@ -100,7 +101,6 @@ require("lazy").setup({
       vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost" }, {
         callback = function()
           lint.try_lint()
-          lint.try_lint("typos")
         end,
       })
     end,
