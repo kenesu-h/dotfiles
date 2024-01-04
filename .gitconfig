@@ -3,3 +3,5 @@
 	email = 8515878+kenesu-h@users.noreply.github.com
 [init]
 	defaultBranch = main
+[alias]
+	pushup = !git push -u origin $(git branch --show-current)
