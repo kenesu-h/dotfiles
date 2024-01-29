@@ -20,6 +20,16 @@ require("lazy").setup({
       require("catppuccin").setup({
         transparent_background = true,
         no_italic = true,
+        integrations = {
+          leap = true,
+        },
+        custom_highlights = function(colors)
+          return {
+            CursorLineNr = { fg = colors.green },
+            CursorLine = { bg = colors.none },
+            TreesitterContext = { bg = colors.crust },
+          }
+        end,
       })
 
       vim.cmd.colorscheme("catppuccin-macchiato")
@@ -43,6 +53,12 @@ require("lazy").setup({
     build = ":TSUpdate",
   },
   {
+    "nvim-treesitter/nvim-treesitter-context",
+    config = function()
+      vim.cmd("TSContextDisable")
+    end,
+  },
+  {
     "VonHeikemen/lsp-zero.nvim",
     branch = "v2.x",
     dependencies = {
@@ -54,7 +70,16 @@ require("lazy").setup({
       -- Autocompletion
       { "hrsh7th/nvim-cmp" },
       { "hrsh7th/cmp-nvim-lsp" },
-      { "L3MON4D3/LuaSnip" },
+      {
+        "L3MON4D3/LuaSnip",
+        dependencies = {
+          { "rafamadriz/friendly-snippets" },
+          { "saadparwaiz1/cmp_luasnip" },
+        },
+        config = function()
+          require("luasnip.loaders.from_vscode").lazy_load()
+        end,
+      },
     },
   },
 
@@ -89,7 +114,6 @@ require("lazy").setup({
       local js_linters = { "eslint" }
 
       lint.linters_by_ft = {
-        markdown = { "vale" },
         lua = { "luacheck" },
         python = { "bandit", "flake8" },
         javascript = js_linters,
@@ -127,14 +151,31 @@ require("lazy").setup({
   -- Other
   { "nanozuki/tabby.nvim" },
   {
+    "luukvbaal/statuscol.nvim",
+    config = function()
+      local builtin = require("statuscol.builtin")
+      require("statuscol").setup({
+        relculright = true,
+        segments = {
+          { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+          {
+            sign = { name = { "Diagnostic" }, mawidth = 1, colwidth = 2 },
+            click = "v:lua.ScSa",
+          },
+          { text = { builtin.lnumfunc }, click = "v:lua.ScLa" },
+          {
+            sign = { namespace = { "gitsigns" }, maxwidth = 1, colwidth = 2 },
+            click = "v:lua.ScSa",
+          },
+        },
+      })
+    end,
+  },
+  {
     "nvim-lualine/lualine.nvim",
     dependencies = {
       "nvim-tree/nvim-web-devicons",
     },
-    config = function()
-      ---@diagnostic disable-next-line: missing-parameter
-      require("lualine").setup()
-    end,
   },
   {
     "ggandor/leap.nvim",

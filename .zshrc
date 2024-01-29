@@ -27,49 +27,115 @@ fi
 source ~/.antidote/antidote.zsh
 antidote load ${ZDOTDIR:-$HOME}/.zsh_plugins.txt
 
+# Lazy-loaded Tools
+function load_thefuck() {
+  if [ -z "$THEFUCK_LOADED" ]; then
+    eval "$(thefuck --alias)"
+    THEFUCK_LOADED=true
+  fi
+}
 
-# Tools
-eval $(thefuck --alias)
+function load_nvm() {
+  if [ -z "$NVM_LOADED" ]; then
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+    NVM_LOADED=true
+  fi
+}
 
-function lazy_load_nvm() {
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+function load_pyenv() {
+  if [ -z "$PYENV_LOADED" ]; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+    PYENV_LOADED=true
+  fi
+}
+
+function load_gcloud() {
+  if [ -z "$GCLOUD_LOADED" ]; then
+    if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/google-cloud-sdk/path.zsh.inc"; fi
+    if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/google-cloud-sdk/completion.zsh.inc"; fi
+    GCLOUD_LOADED=true
+  fi
+}
+
+function thefuck() {
+  unset -f thefuck
+  load_thefuck
+  thefuck "$@"
+}
+
+function fuck() {
+  unset -f fuck
+  load_thefuck
+  fuck "$@"
 }
 
 function nvm() {
   unset -f nvm
-  lazy_load_nvm
-  nvm $@
+  load_nvm
+  nvm "$@"
 }
 
 function node() {
   unset -f node
-  lazy_load_nvm
-  node $@
+  load_nvm
+  node "$@"
 }
 
-# LSPs rely on Node to run
+function npm() {
+  unset -f npm
+  load_nvm
+  npm "$@"
+}
+
+function yarn() {
+  unset -f yarn
+  load_nvm
+  yarn "$@"
+}
+
 function nvim() {
   unset -f nvim
-  lazy_load_nvm
-  nvim $@
+  load_nvm
+  nvim "$@"
 }
 
 function pyenv() {
   unset -f pyenv
-  export PYENV_ROOT="$HOME/.pyenv"
-  export PATH="$PYENV_ROOT/bin:$PATH"
-  eval "$(pyenv init -)"
-  pyenv $@
+  load_pyenv
+  pyenv "$@"
 }
 
 function gcloud() {
   unset -f gcloud
-  if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/google-cloud-sdk/path.zsh.inc"; fi
-  if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/google-cloud-sdk/completion.zsh.inc"; fi
-  gcloud $@
+  load_gcloud
+  gcloud "$@"
 }
+
+function cloud-sql-proxy() {
+  unset -f cloud-sql-proxy
+  load_gcloud
+  cloud-sql-proxy "$@"
+}
+
+# Aliases
+alias bw-login="envchain bw bw login --apikey"
+
+function bw-password() {
+  local bw_session=$(envchain bw bw unlock --passwordenv BW_PASSWORD)
+  if [ -z "$bw_session" ]; then
+    echo "Failed to unlock Bitwarden."
+    return 1
+  fi
+
+  echo $(bw get password --session $bw_session "$@")
+  bw lock >> /dev/null
+}
+
+alias venv="source .venv/bin/activate"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

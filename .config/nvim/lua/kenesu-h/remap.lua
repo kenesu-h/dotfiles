@@ -11,5 +11,5 @@ vim.keymap.set("n", "N", "Nzzzv", { noremap = true })
 
 vim.keymap.set({ "n", "v" }, "p", "P", { noremap = true })
 vim.keymap.set({ "n", "v" }, "gp", "`[v`]", { noremap = true })
-vim.keymap.set({ "n", "v" }, "x", "d", { noremap = true })
+vim.keymap.set({ "n", "v", "o" }, "x", "d", { noremap = true })
 vim.keymap.set({ "n", "v" }, "d", '"_d', { noremap = true })
