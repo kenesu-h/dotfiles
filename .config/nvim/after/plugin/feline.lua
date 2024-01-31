@@ -1,27 +1,58 @@
-local ctp_feline = require("catppuccin.groups.integrations.feline")
+local catppuccin = require("catppuccin.palettes.mocha")
 local feline = require("feline")
 
-local mocha = require("catppuccin.palettes.mocha")
-
-ctp_feline.setup({})
-
-local theme = {
-  fg = mocha.text,
-  bg = mocha.mantle,
-  green = mocha.green,
-  yellow = mocha.yellow,
-  purple = mocha.mauve,
-  orange = mocha.peach,
-  peanut = mocha.flamingo,
-  red = mocha.maroon,
-  aqua = mocha.sky,
-  darkblue = mocha.surface0,
-  dark_red = mocha.red,
+local Separator = {
+  LEFT = " ",
+  MIDDLE = "█",
+  RIGHT = " ",
 }
 
-local left_sep = " "
-local middle_sep = "█"
-local right_sep = " "
+local FelineColor = {
+  FG = "fg",
+  BG = "bg",
+  BLACK = "black",
+  WHITE = "white",
+  MAGENTA = "magenta",
+  ORANGE = "orange",
+  YELLOW = "yellow",
+  GREEN = "green",
+  CYAN = "cyan",
+  SKY_BLUE = "skyblue",
+  OCEAN_BLUE = "oceanblue",
+  VIOLET = "violet",
+}
+
+local ExtraColor = {
+  ROSEWATER = "rosewater",
+  FLAMINGO = "flamingo",
+  PINK = "pink",
+  RED = "red",
+  MAROON = "maroon",
+  SAPPHIRE = "sapphire",
+}
+
+local theme = {
+  [FelineColor.FG] = catppuccin.text,
+  [FelineColor.BG] = catppuccin.base,
+  [FelineColor.BLACK] = catppuccin.surface0,
+  [FelineColor.WHITE] = catppuccin.text,
+  [FelineColor.MAGENTA] = catppuccin.mauve,
+  [FelineColor.ORANGE] = catppuccin.peach,
+  [FelineColor.YELLOW] = catppuccin.yellow,
+  [FelineColor.GREEN] = catppuccin.green,
+  [FelineColor.CYAN] = catppuccin.teal,
+  [FelineColor.SKY_BLUE] = catppuccin.sky,
+  [FelineColor.OCEAN_BLUE] = catppuccin.blue,
+  [FelineColor.VIOLET] = catppuccin.lavender,
+
+  -- Colors not part of the default feline theme
+  [ExtraColor.ROSEWATER] = catppuccin.rosewater,
+  [ExtraColor.FLAMINGO] = catppuccin.flamingo,
+  [ExtraColor.PINK] = catppuccin.pink,
+  [ExtraColor.RED] = catppuccin.red,
+  [ExtraColor.MAROON] = catppuccin.maroon,
+  [ExtraColor.SAPPHIRE] = catppuccin.sapphire,
+}
 
 local components = {}
 
@@ -30,12 +61,12 @@ components.mode_icon = {
   provider = "",
   hl = function()
     return {
-      fg = mocha.surface0,
+      fg = FelineColor.BLACK,
       bg = vi_mode.get_mode_color(),
     }
   end,
-  left_sep = left_sep,
-  right_sep = middle_sep,
+  left_sep = Separator.LEFT,
+  right_sep = Separator.MIDDLE,
 }
 components.mode_body = {
   provider = function()
@@ -44,10 +75,10 @@ components.mode_body = {
   hl = function()
     return {
       fg = vi_mode.get_mode_color(),
-      bg = mocha.surface0,
+      bg = FelineColor.BLACK,
     }
   end,
-  right_sep = right_sep,
+  right_sep = Separator.RIGHT,
 }
 
 local git = require("feline.providers.git")
@@ -58,11 +89,11 @@ end
 components.branch_icon = {
   provider = "",
   hl = {
-    fg = mocha.surface0,
-    bg = mocha.flamingo,
+    fg = FelineColor.BLACK,
+    bg = ExtraColor.PINK,
   },
-  left_sep = left_sep,
-  right_sep = middle_sep,
+  left_sep = Separator.LEFT,
+  right_sep = Separator.MIDDLE,
   enabled = is_git_active,
 }
 
@@ -71,8 +102,8 @@ components.branch_body = {
     return " " .. git.git_branch()
   end,
   hl = {
-    fg = mocha.text,
-    bg = mocha.surface0,
+    fg = FelineColor.WHITE,
+    bg = FelineColor.BLACK,
   },
   enabled = is_git_active,
 }
@@ -80,8 +111,8 @@ components.branch_body = {
 components.diff_added = {
   provider = git.git_diff_added,
   hl = {
-    fg = mocha.green,
-    bg = mocha.surface0,
+    fg = FelineColor.GREEN,
+    bg = FelineColor.BLACK,
   },
   enabled = is_git_active,
 }
@@ -89,8 +120,8 @@ components.diff_added = {
 components.diff_removed = {
   provider = git.git_diff_removed,
   hl = {
-    fg = mocha.red,
-    bg = mocha.surface0,
+    fg = ExtraColor.RED,
+    bg = FelineColor.BLACK,
   },
   enabled = is_git_active,
 }
@@ -98,10 +129,19 @@ components.diff_removed = {
 components.diff_changed = {
   provider = git.git_diff_changed,
   hl = {
-    fg = mocha.yellow,
-    bg = mocha.surface0,
+    fg = FelineColor.YELLOW,
+    bg = FelineColor.BLACK,
   },
-  right_sep = right_sep,
+  enabled = is_git_active,
+}
+
+components.git_right_sep = {
+  provider = function()
+    return Separator.RIGHT
+  end,
+  hl = {
+    fg = FelineColor.BLACK,
+  },
   enabled = is_git_active,
 }
 
@@ -119,28 +159,28 @@ components.file_info = {
 components.diagnostic_errors = {
   provider = "diagnostic_errors",
   hl = {
-    fg = mocha.red,
+    fg = ExtraColor.RED,
   },
 }
 
 components.diagnostic_warnings = {
   provider = "diagnostic_warnings",
   hl = {
-    fg = mocha.yellow,
+    fg = FelineColor.YELLOW,
   },
 }
 
 components.diagnostic_hints = {
   provider = "diagnostic_hints",
   hl = {
-    fg = mocha.sky,
+    fg = FelineColor.SKY_BLUE,
   },
 }
 
 components.diagnostic_info = {
   provider = "diagnostic_info",
   hl = {
-    fg = mocha.text,
+    fg = FelineColor.WHITE,
   },
 }
 
@@ -148,11 +188,11 @@ local lsp = require("feline.providers.lsp")
 components.lsp_icon = {
   provider = "",
   hl = {
-    fg = mocha.surface0,
-    bg = mocha.flamingo,
+    fg = FelineColor.BLACK,
+    bg = ExtraColor.PINK,
   },
-  left_sep = left_sep,
-  right_sep = middle_sep,
+  left_sep = Separator.LEFT,
+  right_sep = Separator.MIDDLE,
   enabled = lsp.is_lsp_attached,
 }
 
@@ -161,10 +201,10 @@ components.lsp_body = {
     return " " .. lsp.lsp_client_names()
   end,
   hl = {
-    fg = mocha.text,
-    bg = mocha.surface0,
+    fg = FelineColor.WHITE,
+    bg = FelineColor.BLACK,
   },
-  right_sep = right_sep,
+  right_sep = Separator.RIGHT,
   enabled = lsp.is_lsp_attached,
 }
 
@@ -172,11 +212,11 @@ local cursor = require("feline.providers.cursor")
 components.cursor_icon = {
   provider = "󰈔",
   hl = {
-    fg = mocha.surface0,
-    bg = mocha.green,
+    fg = FelineColor.BLACK,
+    bg = FelineColor.GREEN,
   },
-  left_sep = left_sep,
-  right_sep = middle_sep,
+  left_sep = Separator.LEFT,
+  right_sep = Separator.MIDDLE,
 }
 
 components.cursor_body = {
@@ -184,10 +224,10 @@ components.cursor_body = {
     return " " .. cursor.position(nil, {}) .. " " .. cursor.line_percentage(nil, {})
   end,
   hl = {
-    fg = mocha.green,
-    bg = mocha.surface0,
+    fg = FelineColor.WHITE,
+    bg = FelineColor.BLACK,
   },
-  right_sep = right_sep,
+  right_sep = Separator.RIGHT,
 }
 
 local left = {
@@ -199,6 +239,7 @@ local left = {
   components.diff_added,
   components.diff_removed,
   components.diff_changed,
+  components.git_right_sep,
 
   components.file_info,
   components.diagnostic_errors,
@@ -230,13 +271,13 @@ feline.setup({
   },
   theme = theme,
   vi_mode_colors = {
-    NORMAL = "green",
-    OP = "green",
-    INSERT = "yellow",
-    VISUAL = "purple",
-    LINES = "orange",
-    BLOCK = "dark_red",
-    REPLACE = "red",
-    COMMAND = "aqua",
+    NORMAL = FelineColor.GREEN,
+    OP = FelineColor.GREEN,
+    INSERT = FelineColor.YELLOW,
+    VISUAL = FelineColor.MAGENTA,
+    LINES = FelineColor.MAGENTA,
+    BLOCK = FelineColor.MAGENTA,
+    REPLACE = ExtraColor.RED,
+    COMMAND = FelineColor.ORANGE,
   },
 })

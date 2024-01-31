@@ -1,8 +1,20 @@
 vim.g.mapleader = " "
 
 -- Thanks to ThePrimeagen (https://www.youtube.com/watch?v=w7i4amO_zaE)
-vim.keymap.set("v", "J", ":m '>+1<CR>gv", { noremap = true })
-vim.keymap.set("v", "K", ":m '<-2<CR>gv", { noremap = true })
+vim.keymap.set("v", "J", function()
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "x", true)
+  vim.cmd("'<,'>m '>+1")
+  vim.cmd("normal! gv")
+  vim.cmd("normal! =")
+  vim.cmd("normal! gv")
+end, { noremap = true })
+vim.keymap.set("v", "K", function()
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "x", true)
+  vim.cmd("'<,'>m '<-2")
+  vim.cmd("normal! gv")
+  vim.cmd("normal! =")
+  vim.cmd("normal! gv")
+end, { noremap = true })
 
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true })
