@@ -122,20 +122,15 @@ function cloud-sql-proxy() {
 }
 
 # Aliases
-alias bw-login="envchain bw bw login --apikey"
-
-function bw-password() {
-  local bw_session=$(envchain bw bw unlock --passwordenv BW_PASSWORD)
-  if [ -z "$bw_session" ]; then
-    echo "Failed to unlock Bitwarden."
-    return 1
-  fi
-
-  echo $(bw get password --session $bw_session "$@")
-  bw lock >> /dev/null
-}
-
 alias venv="source .venv/bin/activate"
+function make-venv() {
+  [ -s .venv ] && rm -r .venv
+  python -m venv .venv
+
+  venv
+  [ -s requirements.txt ] && python -m pip install -r requirements.txt
+  [ -s requirements-test.txt ] && python -m pip install -r requirements-test.txt
+}
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

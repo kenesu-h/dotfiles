@@ -172,7 +172,7 @@ require("lazy").setup({
     end,
   },
   {
-    "nvim-lualine/lualine.nvim",
+    "freddiehaddad/feline.nvim",
     dependencies = {
       "nvim-tree/nvim-web-devicons",
     },
