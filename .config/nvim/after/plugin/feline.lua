@@ -19,160 +19,175 @@ local theme = {
   dark_red = mocha.red,
 }
 
-local left_separator = " "
-local middle_separator = "█"
-local right_separator = " "
-
-local function component_icon(provider, bg, enabled)
-  return {
-    provider = provider,
-    hl = function()
-      return {
-        fg = mocha.surface0,
-        bg = bg(),
-      }
-    end,
-    left_sep = left_separator,
-    right_sep = middle_separator,
-    enabled = enabled == nil and true or enabled,
-  }
-end
-
-local function component_body(provider, fg, enabled)
-  return {
-    provider = function()
-      return " " .. provider()
-    end,
-    hl = function()
-      return {
-        fg = fg(),
-        bg = mocha.surface0,
-      }
-    end,
-    right_sep = right_separator,
-    enabled = enabled == nil and true or enabled,
-  }
-end
+local left_sep = " "
+local middle_sep = "█"
+local right_sep = " "
 
 local components = {}
 
 local vi_mode = require("feline.providers.vi_mode")
-components.mode_icon = component_icon("", vi_mode.get_mode_color)
-components.mode_body = component_body(vi_mode.get_vim_mode, vi_mode.get_mode_color)
+components.mode_icon = {
+  provider = "",
+  hl = function()
+    return {
+      fg = mocha.surface0,
+      bg = vi_mode.get_mode_color(),
+    }
+  end,
+  left_sep = left_sep,
+  right_sep = middle_sep,
+}
+components.mode_body = {
+  provider = function()
+    return " " .. vi_mode.get_vim_mode()
+  end,
+  hl = function()
+    return {
+      fg = vi_mode.get_mode_color(),
+      bg = mocha.surface0,
+    }
+  end,
+  right_sep = right_sep,
+}
 
 local git = require("feline.providers.git")
-local function git_enabled()
+local function is_git_active()
   return git.git_branch() ~= ""
 end
 
-components.branch_icon = component_icon("", function()
-  return mocha.flamingo
-end, git_enabled)
-components.branch_body = component_body(git.git_branch, function()
-  return mocha.text
-end, git_enabled)
+components.branch_icon = {
+  provider = "",
+  hl = {
+    fg = mocha.surface0,
+    bg = mocha.flamingo,
+  },
+  left_sep = left_sep,
+  right_sep = middle_sep,
+  enabled = is_git_active,
+}
+
+components.branch_body = {
+  provider = function()
+    return " " .. git.git_branch()
+  end,
+  hl = {
+    fg = mocha.text,
+    bg = mocha.surface0,
+  },
+  enabled = is_git_active,
+}
 
 components.diff_added = {
   provider = git.git_diff_added,
   hl = {
     fg = mocha.green,
-    bg = mocha.mantle,
+    bg = mocha.surface0,
   },
+  enabled = is_git_active,
 }
 
 components.diff_removed = {
   provider = git.git_diff_removed,
   hl = {
     fg = mocha.red,
-    bg = mocha.mantle,
+    bg = mocha.surface0,
   },
+  enabled = is_git_active,
 }
 
 components.diff_changed = {
   provider = git.git_diff_changed,
   hl = {
     fg = mocha.yellow,
-    bg = mocha.mantle,
+    bg = mocha.surface0,
+  },
+  right_sep = right_sep,
+  enabled = is_git_active,
+}
+
+components.file_info = {
+  provider = {
+    name = "file_info",
+    opts = {
+      type = "relative-short",
+    },
+  },
+  left_sep = " ",
+  right_sep = " ",
+}
+
+components.diagnostic_errors = {
+  provider = "diagnostic_errors",
+  hl = {
+    fg = mocha.red,
   },
 }
 
-local c = {
-  separator = {
-    provider = "",
+components.diagnostic_warnings = {
+  provider = "diagnostic_warnings",
+  hl = {
+    fg = mocha.yellow,
   },
-  fileinfo = {
-    provider = {
-      name = "file_info",
-      opts = {
-        type = "relative-short",
-      },
-    },
-    left_sep = " ",
-    right_sep = " ",
+}
+
+components.diagnostic_hints = {
+  provider = "diagnostic_hints",
+  hl = {
+    fg = mocha.sky,
   },
-  diagnostic_errors = {
-    provider = "diagnostic_errors",
-    hl = {
-      fg = "red",
-    },
+}
+
+components.diagnostic_info = {
+  provider = "diagnostic_info",
+  hl = {
+    fg = mocha.text,
   },
-  diagnostic_warnings = {
-    provider = "diagnostic_warnings",
-    hl = {
-      fg = "yellow",
-    },
+}
+
+local lsp = require("feline.providers.lsp")
+components.lsp_icon = {
+  provider = "",
+  hl = {
+    fg = mocha.surface0,
+    bg = mocha.flamingo,
   },
-  diagnostic_hints = {
-    provider = "diagnostic_hints",
-    hl = {
-      fg = "aqua",
-    },
+  left_sep = left_sep,
+  right_sep = middle_sep,
+  enabled = lsp.is_lsp_attached,
+}
+
+components.lsp_body = {
+  provider = function()
+    return " " .. lsp.lsp_client_names()
+  end,
+  hl = {
+    fg = mocha.text,
+    bg = mocha.surface0,
   },
-  diagnostic_info = {
-    provider = "diagnostic_info",
+  right_sep = right_sep,
+  enabled = lsp.is_lsp_attached,
+}
+
+local cursor = require("feline.providers.cursor")
+components.cursor_icon = {
+  provider = "󰈔",
+  hl = {
+    fg = mocha.surface0,
+    bg = mocha.green,
   },
-  lsp_client_names = {
-    provider = "lsp_client_names",
-    hl = {
-      fg = "purple",
-      bg = "darkblue",
-    },
-    left_sep = left_separator,
-    right_sep = right_separator,
+  left_sep = left_sep,
+  right_sep = middle_sep,
+}
+
+components.cursor_body = {
+  provider = function()
+    return " " .. cursor.position(nil, {}) .. " " .. cursor.line_percentage(nil, {})
+  end,
+  hl = {
+    fg = mocha.green,
+    bg = mocha.surface0,
   },
-  file_type = {
-    provider = {
-      name = "file_type",
-      opts = {
-        filetype_icon = true,
-        case = "titlecase",
-      },
-    },
-    hl = {
-      fg = "red",
-      bg = "darkblue",
-    },
-    left_sep = left_separator,
-    right_sep = right_separator,
-  },
-  position = {
-    provider = "position",
-    hl = {
-      fg = "green",
-      bg = "darkblue",
-    },
-    left_sep = left_separator,
-    right_sep = right_separator,
-  },
-  line_percentage = {
-    provider = "line_percentage",
-    hl = {
-      fg = "aqua",
-      bg = "darkblue",
-    },
-    left_sep = left_separator,
-    right_sep = right_separator,
-  },
+  right_sep = right_sep,
 }
 
 local left = {
@@ -184,35 +199,32 @@ local left = {
   components.diff_added,
   components.diff_removed,
   components.diff_changed,
-}
 
-local middle = {
-  c.fileinfo,
-  c.diagnostic_errors,
-  c.diagnostic_warnings,
-  c.diagnostic_info,
-  c.diagnostic_hints,
+  components.file_info,
+  components.diagnostic_errors,
+  components.diagnostic_warnings,
+  components.diagnostic_info,
+  components.diagnostic_hints,
 }
 
 local right = {
-  c.lsp_client_names,
-  c.file_type,
-  c.file_encoding,
-  c.position,
-  c.line_percentage,
-  c.scroll_bar,
+  components.lsp_icon,
+  components.lsp_body,
+
+  components.cursor_icon,
+  components.cursor_body,
 }
 
 feline.setup({
   components = {
     active = {
       left,
-      middle,
+      {},
       right,
     },
     inactive = {
       left,
-      middle,
+      {},
       right,
     },
   },
