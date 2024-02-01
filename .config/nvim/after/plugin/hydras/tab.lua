@@ -6,13 +6,15 @@ local util = require("hydras.util")
 --- @param forward boolean
 --- @return nil
 local function move_tab(forward)
-  if #vim.api.nvim_list_tabpages() > 1 then
+  local error = not pcall(function()
     if forward then
       vim.cmd("+tabmove")
     else
       vim.cmd("-tabmove")
     end
-  else
+  end)
+
+  if error then
     print("Cannot move tab without any other tabs open!")
   end
 end
@@ -45,9 +47,9 @@ _<Esc>_
     {
       "x",
       function()
-        if #vim.api.nvim_list_tabpages() > 1 then
+        if not pcall(function()
           vim.cmd("tabclose")
-        else
+        end) then
           print("Cannot close last tab!")
         end
       end,

@@ -142,6 +142,7 @@ require("lazy").setup({
     end,
   },
   {
+    -- Use this for faster git blames and the ability to open current file's remote URL
     "f-person/git-blame.nvim",
     config = function()
       vim.g.gitblame_enabled = false
@@ -149,6 +150,24 @@ require("lazy").setup({
   },
 
   -- Other
+  {
+    "aserowy/tmux.nvim",
+    config = function()
+      require("tmux").setup({
+        copy_sync = {
+          enable = true,
+          redirect_to_clipboard = true,
+        },
+      })
+    end,
+  },
+  { "anuvyklack/hydra.nvim" },
+  {
+    "freddiehaddad/feline.nvim",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+    },
+  },
   { "nanozuki/tabby.nvim" },
   {
     "luukvbaal/statuscol.nvim",
@@ -172,12 +191,6 @@ require("lazy").setup({
     end,
   },
   {
-    "freddiehaddad/feline.nvim",
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
-    },
-  },
-  {
     "ggandor/leap.nvim",
     config = function()
       require("leap").add_default_mappings()
@@ -187,16 +200,14 @@ require("lazy").setup({
     end,
   },
   {
-    "echasnovski/mini.nvim",
-    version = "*",
-    config = function()
-      require("mini.comment").setup()
-      require("mini.surround").setup()
-    end,
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
   },
   {
-    "windwp/nvim-autopairs",
-    event = "InsertEnter",
+    "sindrets/winshift.nvim",
     opts = {},
   },
   {
@@ -211,24 +222,18 @@ require("lazy").setup({
     end,
   },
   {
-    "ThePrimeagen/harpoon",
-    branch = "harpoon2",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    opts = {},
   },
   {
-    "aserowy/tmux.nvim",
+    "echasnovski/mini.nvim",
+    version = "*",
     config = function()
-      require("tmux").setup({
-        copy_sync = {
-          enable = true,
-          redirect_to_clipboard = true,
-        },
-      })
+      require("mini.comment").setup()
+      require("mini.surround").setup()
     end,
   },
-  { "anuvyklack/hydra.nvim" },
   {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
@@ -248,10 +253,6 @@ require("lazy").setup({
   },
   {
     "folke/neodev.nvim",
-    opts = {},
-  },
-  {
-    "sindrets/winshift.nvim",
     opts = {},
   },
 })

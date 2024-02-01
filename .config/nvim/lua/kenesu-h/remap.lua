@@ -1,27 +1,40 @@
 vim.g.mapleader = " "
 
+local REMAP_OPTS = {
+  noremap = true,
+  silent = true,
+}
+
+--- @param modes string | table
+--- @param lhs string
+--- @param rhs string | function
+local function remap(modes, lhs, rhs)
+  vim.keymap.set(modes, lhs, rhs, REMAP_OPTS)
+end
+
 -- Thanks to ThePrimeagen (https://www.youtube.com/watch?v=w7i4amO_zaE)
-vim.keymap.set("v", "J", function()
+remap("v", "J", function()
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "x", true)
   vim.cmd("'<,'>m '>+1")
   vim.cmd("normal! gv")
   vim.cmd("normal! =")
   vim.cmd("normal! gv")
-end, { noremap = true })
-vim.keymap.set("v", "K", function()
+end)
+
+remap("v", "K", function()
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "x", true)
   vim.cmd("'<,'>m '<-2")
   vim.cmd("normal! gv")
   vim.cmd("normal! =")
   vim.cmd("normal! gv")
-end, { noremap = true })
+end)
 
-vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true })
-vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true })
-vim.keymap.set("n", "n", "nzzzv", { noremap = true })
-vim.keymap.set("n", "N", "Nzzzv", { noremap = true })
+remap("n", "<C-d>", "<C-d>zz")
+remap("n", "<C-u>", "<C-u>zz")
+remap("n", "n", "nzzzv")
+remap("n", "N", "Nzzzv")
 
-vim.keymap.set({ "n", "v" }, "p", "P", { noremap = true })
-vim.keymap.set({ "n", "v" }, "gp", "`[v`]", { noremap = true })
-vim.keymap.set({ "n", "v", "o" }, "x", "d", { noremap = true })
-vim.keymap.set({ "n", "v" }, "d", '"_d', { noremap = true })
+remap({ "n", "v" }, "p", "P")
+remap({ "n", "v" }, "gp", "`[v`]")
+remap({ "n", "v", "o" }, "x", "d")
+remap({ "n", "v" }, "d", '"_d')

@@ -45,7 +45,7 @@ local theme = {
   [FelineColor.OCEAN_BLUE] = catppuccin.blue,
   [FelineColor.VIOLET] = catppuccin.lavender,
 
-  -- Colors not part of the default feline theme
+  -- Colors that aren't part of the default feline theme
   [ExtraColor.ROSEWATER] = catppuccin.rosewater,
   [ExtraColor.FLAMINGO] = catppuccin.flamingo,
   [ExtraColor.PINK] = catppuccin.pink,

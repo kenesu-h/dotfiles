@@ -18,7 +18,14 @@ _<Esc>_
 ]],
   nil,
   {
-    { "s", builtin.git_status },
+    {
+      "s",
+      function()
+        if not pcall(builtin.git_status) then
+          print("Working directory isn't a Git directory!")
+        end
+      end,
+    },
     {
       "b",
       function()
