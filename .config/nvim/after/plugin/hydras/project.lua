@@ -13,14 +13,24 @@ harpoon:setup()
 project.hydra = util.activator(util.base_hydra(
   "Project",
   [[
+_q_: quickfix  _t_: todo
+
 _f_: files     _b_: browser
-_g_: grep      _t_: todo
-_h_: harpoon   _m_: mark
+_g_: grep      _m_: mark
+_h_: harpoon 
 
 _<Esc>_
 ]],
   nil,
   {
+    { "q", builtin.quickfix },
+    {
+      "t",
+      function()
+        vim.cmd("TodoTelescope")
+      end,
+    },
+
     { "f", builtin.find_files },
     { "g", builtin.live_grep },
     {
@@ -31,12 +41,6 @@ _<Esc>_
     },
 
     { "b", require("telescope").extensions.file_browser.file_browser },
-    {
-      "t",
-      function()
-        vim.cmd("TodoTelescope")
-      end,
-    },
     {
       "m",
       function()
