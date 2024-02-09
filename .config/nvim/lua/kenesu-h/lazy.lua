@@ -161,7 +161,7 @@ require("lazy").setup({
       })
     end,
   },
-  { "anuvyklack/hydra.nvim" },
+  { "nvimtools/hydra.nvim" },
   {
     "freddiehaddad/feline.nvim",
     dependencies = {

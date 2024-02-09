@@ -20,7 +20,9 @@ function util.base_hydra(name, hint, body, heads)
       invoke_on_body = true,
       hint = {
         position = "middle",
-        border = "rounded",
+        float_opts = {
+          border = "rounded",
+        },
       },
     },
     heads = {
