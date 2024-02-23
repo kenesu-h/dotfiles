@@ -115,7 +115,7 @@ require("lazy").setup({
 
       lint.linters_by_ft = {
         lua = { "luacheck" },
-        python = { "bandit", "flake8" },
+        python = { "mypy", "bandit", "flake8" },
         javascript = js_linters,
         javascriptreact = js_linters,
         typescript = js_linters,

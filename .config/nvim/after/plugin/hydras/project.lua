@@ -13,6 +13,8 @@ harpoon:setup()
 project.hydra = util.activator(util.base_hydra(
   "Project",
   [[
+_y_: yank current path
+
 _q_: quickfix  _t_: todo
 
 _f_: files     _b_: browser
@@ -23,6 +25,13 @@ _<Esc>_
 ]],
   nil,
   {
+    {
+      "y",
+      function()
+        vim.fn.setreg("*", vim.api.nvim_buf_get_name(0))
+      end,
+    },
+
     { "q", builtin.quickfix },
     {
       "t",
