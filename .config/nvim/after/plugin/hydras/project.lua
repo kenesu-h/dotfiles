@@ -13,33 +13,18 @@ harpoon:setup()
 project.hydra = util.activator(util.base_hydra(
   "Project",
   [[
-_y_: yank current path
+_f_: files     _b_: browser
+_g_: grep      _m_: mark
+_h_: harpoon
 
 _q_: quickfix  _t_: todo
 
-_f_: files     _b_: browser
-_g_: grep      _m_: mark
-_h_: harpoon 
+_y_: yank current path
 
 _<Esc>_
 ]],
   nil,
   {
-    {
-      "y",
-      function()
-        vim.fn.setreg("*", vim.api.nvim_buf_get_name(0))
-      end,
-    },
-
-    { "q", builtin.quickfix },
-    {
-      "t",
-      function()
-        vim.cmd("TodoTelescope")
-      end,
-    },
-
     { "f", builtin.find_files },
     { "g", builtin.live_grep },
     {
@@ -54,6 +39,21 @@ _<Esc>_
       "m",
       function()
         harpoon:list():append()
+      end,
+    },
+
+    { "q", builtin.quickfix },
+    {
+      "t",
+      function()
+        vim.cmd("TodoTelescope")
+      end,
+    },
+
+    {
+      "y",
+      function()
+        vim.fn.setreg("*", vim.api.nvim_buf_get_name(0))
       end,
     },
   }

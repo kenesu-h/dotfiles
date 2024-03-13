@@ -191,6 +191,23 @@ require("lazy").setup({
     end,
   },
   {
+    "mvllow/modes.nvim",
+    config = function()
+      local catppuccin = require("catppuccin.palettes.mocha")
+
+      require("modes").setup({
+        colors = {
+          copy = catppuccin.green,
+          delete = catppuccin.red,
+          insert = catppuccin.peach,
+          visual = catppuccin.mauve,
+        },
+
+        line_opacity = 0.25,
+      })
+    end,
+  },
+  {
     "ggandor/leap.nvim",
     config = function()
       require("leap").add_default_mappings()
@@ -254,5 +271,33 @@ require("lazy").setup({
   {
     "folke/neodev.nvim",
     opts = {},
+  },
+  {
+    "zbirenbaum/copilot-cmp",
+    dependencies = {
+      {
+        "zbirenbaum/copilot.lua",
+        config = function()
+          require("copilot").setup({
+            suggestion = { enabled = false },
+            panel = { enabled = false },
+          })
+        end,
+      },
+    },
+    config = function()
+      require("copilot_cmp").setup()
+    end,
+  },
+  {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    branch = "canary",
+    dependencies = {
+      { "zbirenbaum/copilot.lua" },
+      { "nvim-lua/plenary.nvim" },
+    },
+    config = function()
+      require("CopilotChat").setup({})
+    end,
   },
 })
