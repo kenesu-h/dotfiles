@@ -297,7 +297,9 @@ require("lazy").setup({
       { "nvim-lua/plenary.nvim" },
     },
     config = function()
-      require("CopilotChat").setup({})
+      if vim.fn.findfile("hosts.json", os.getenv("HOME") .. "/.config/github-copilot") ~= "" then
+        require("CopilotChat").setup({})
+      end
     end,
   },
 })
