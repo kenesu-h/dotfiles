@@ -21,7 +21,7 @@ function util.base_hydra(name, hint, body, heads)
       hint = {
         position = "middle",
         float_opts = {
-          border = "rounded",
+          border = "single",
         },
       },
     },

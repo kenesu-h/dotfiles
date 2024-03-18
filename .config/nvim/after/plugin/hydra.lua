@@ -8,6 +8,16 @@ local tab = require("hydras.tab")
 local util = require("hydras.util")
 local window = require("hydras.window")
 
+local colors = require("catppuccin.palettes").get_palette("frappe")
+local HydraColors = {
+  HydraHint = { bg = colors.mantle },
+  HydraBorder = { bg = colors.mantle },
+}
+
+for hl, col in pairs(HydraColors) do
+  vim.api.nvim_set_hl(0, hl, col)
+end
+
 util.base_hydra(
   "Main",
   [[

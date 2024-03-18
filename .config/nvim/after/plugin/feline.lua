@@ -33,7 +33,7 @@ local ExtraColor = {
 
 local theme = {
   [FelineColor.FG] = catppuccin.text,
-  [FelineColor.BG] = catppuccin.base,
+  [FelineColor.BG] = catppuccin.mantle,
   [FelineColor.BLACK] = catppuccin.surface0,
   [FelineColor.WHITE] = catppuccin.text,
   [FelineColor.MAGENTA] = catppuccin.mauve,
