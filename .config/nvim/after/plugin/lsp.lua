@@ -84,6 +84,9 @@ cmp.setup({
       behavior = cmp.ConfirmBehavior.Replace,
     }),
   }),
+  matching = {
+    disallow_fuzzy_matching = true,
+  },
   snippet = {
     expand = function(args)
       require("luasnip").lsp_expand(args.body)
