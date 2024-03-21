@@ -135,14 +135,28 @@ function cloud-sql-proxy() {
 }
 
 # Aliases
-alias venv="source .venv/bin/activate"
-function make-venv() {
-  [ -s .venv ] && rm -r .venv
-  python -m venv .venv
+function venv() {
+  if [ -z "$1" ]; then
+    if [ ! -d ".venv" ]; then
+      echo "No venv found."
+      return
+    fi
+    source .venv/bin/activate
+  elif [ "$1" = "install" ]; then
+    [ -s requirements.txt ] && python -m pip install -r requirements.txt
+    [ -s requirements-test.txt ] && python -m pip install -r requirements-test.txt
+  elif [ "$1" = "uninstall" ]; then
+    python -m pip uninstall -y -r <(python -m pip freeze)
+  fi
+}
 
-  venv
-  [ -s requirements.txt ] && python -m pip install -r requirements.txt
-  [ -s requirements-test.txt ] && python -m pip install -r requirements-test.txt
+alias mkvenv="python -m venv .venv"
+
+function rmvenv() {
+  if [ -n "$VIRTUAL_ENV" ]; then
+    deactivate
+  fi
+  [ -d ".venv" ] && rm -r .venv
 }
 
 # Run `p10k configure` to customize

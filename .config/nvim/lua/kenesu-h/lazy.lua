@@ -281,6 +281,15 @@ require("lazy").setup({
           require("copilot").setup({
             suggestion = { enabled = false },
             panel = { enabled = false },
+            filetypes = {
+              lua = true,
+              python = true,
+              javascript = true,
+              javascriptreact = true,
+              typescript = true,
+              typescriptreact = true,
+              ["*"] = false,
+            },
           })
         end,
       },
