@@ -10,8 +10,6 @@ window.hydra = util.activator(util.base_hydra(
 split:
 _h_: left, _j_: down, _k_: up, _l_: right
 
-_s_: swap
-
 _<Esc>_
 ]],
   nil,
@@ -40,12 +38,6 @@ _<Esc>_
       function()
         vim.cmd("vsplit")
         vim.cmd("wincmd l")
-      end,
-    },
-    {
-      "s",
-      function()
-        vim.cmd("WinShift swap")
       end,
     },
   }

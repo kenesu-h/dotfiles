@@ -4,20 +4,18 @@ local project = {}
 local util = require("hydras.util")
 
 local builtin = require("telescope.builtin")
-local harpoon = require("harpoon")
-
----@diagnostic disable-next-line: missing-parameter
-harpoon:setup()
+local grapple = require("grapple")
 
 --- @type fun():nil
 project.hydra = util.activator(util.base_hydra(
   "Project",
   [[
-_f_: files     _b_: browser
-_g_: grep      _m_: mark
-_h_: harpoon
+_f_: files
+_g_: grep
+_c_: comments
 
-_q_: quickfix  _t_: todo
+_t_: tags
+_m_: mark
 
 _y_: yank current path
 
@@ -28,27 +26,14 @@ _<Esc>_
     { "f", builtin.find_files },
     { "g", builtin.live_grep },
     {
-      "h",
-      function()
-        harpoon.ui:toggle_quick_menu(harpoon:list())
-      end,
-    },
-
-    { "b", require("telescope").extensions.file_browser.file_browser },
-    {
-      "m",
-      function()
-        harpoon:list():append()
-      end,
-    },
-
-    { "q", builtin.quickfix },
-    {
-      "t",
+      "c",
       function()
         vim.cmd("TodoTelescope")
       end,
     },
+
+    { "t", grapple.toggle_tags },
+    { "m", grapple.toggle },
 
     {
       "y",

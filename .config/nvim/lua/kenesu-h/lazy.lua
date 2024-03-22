@@ -42,10 +42,6 @@ require("lazy").setup({
     tag = "0.1.2",
     dependencies = { "nvim-lua/plenary.nvim" },
   },
-  {
-    "nvim-telescope/telescope-file-browser.nvim",
-    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
-  },
 
   -- Treesitter / LSP
   {
@@ -55,7 +51,7 @@ require("lazy").setup({
   {
     "nvim-treesitter/nvim-treesitter-context",
     config = function()
-      vim.cmd("TSContextDisable")
+      require("treesitter-context").setup({})
     end,
   },
   {
@@ -70,17 +66,18 @@ require("lazy").setup({
       -- Autocompletion
       { "hrsh7th/nvim-cmp" },
       { "hrsh7th/cmp-nvim-lsp" },
-      {
-        "L3MON4D3/LuaSnip",
-        dependencies = {
-          { "rafamadriz/friendly-snippets" },
-          { "saadparwaiz1/cmp_luasnip" },
-        },
-        config = function()
-          require("luasnip.loaders.from_vscode").lazy_load()
-        end,
-      },
+      { "L3MON4D3/LuaSnip" },
     },
+  },
+  {
+    "L3MON4D3/LuaSnip",
+    dependencies = {
+      { "rafamadriz/friendly-snippets" },
+      { "saadparwaiz1/cmp_luasnip" },
+    },
+    config = function()
+      require("luasnip.loaders.from_vscode").lazy_load()
+    end,
   },
 
   -- Formatter
@@ -210,22 +207,22 @@ require("lazy").setup({
   {
     "ggandor/leap.nvim",
     config = function()
-      require("leap").add_default_mappings()
+      local leap = require("leap")
+      leap.add_default_mappings()
 
-      vim.keymap.set({ "n", "v", "o" }, "f", "<Plug>(leap-forward)", {})
-      vim.keymap.set({ "n", "v", "o" }, "F", "<Plug>(leap-backward)", {})
+      vim.keymap.set({ "n", "v", "o" }, "f", function()
+        local focusable_windows = vim.tbl_filter(function(win)
+          return vim.api.nvim_win_get_config(win).focusable
+        end, vim.api.nvim_tabpage_list_wins(0))
+        leap.leap({ target_windows = focusable_windows })
+      end)
     end,
   },
   {
-    "ThePrimeagen/harpoon",
-    branch = "harpoon2",
+    "cbochs/grapple.nvim",
     dependencies = {
-      "nvim-lua/plenary.nvim",
+      { "nvim-tree/nvim-web-devicons", lazy = true },
     },
-  },
-  {
-    "sindrets/winshift.nvim",
-    opts = {},
   },
   {
     "lukas-reineke/indent-blankline.nvim",
@@ -255,18 +252,6 @@ require("lazy").setup({
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {},
-  },
-  {
-    "m4xshen/hardtime.nvim",
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
-    },
-    config = function()
-      require("hardtime").setup({
-        disable_mouse = false,
-      })
-    end,
   },
   {
     "folke/neodev.nvim",
