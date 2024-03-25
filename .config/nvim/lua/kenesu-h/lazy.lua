@@ -51,7 +51,18 @@ require("lazy").setup({
   {
     "nvim-treesitter/nvim-treesitter-context",
     config = function()
-      require("treesitter-context").setup({})
+      local colors = require("catppuccin.palettes").get_palette("mocha")
+      local ContextColors = {
+        TreesitterContextSeparator = { bg = colors.mantle },
+      }
+
+      for hl, col in pairs(ContextColors) do
+        vim.api.nvim_set_hl(0, hl, col)
+      end
+
+      require("treesitter-context").setup({
+        separator = "─",
+      })
     end,
   },
   {
