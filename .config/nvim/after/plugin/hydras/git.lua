@@ -10,9 +10,10 @@ local builtin = require("telescope.builtin")
 git.hydra = util.activator(util.base_hydra(
   "Git",
   [[
-_s_: status  _h_: hunk
-^^           _o_: open url
-^^           _b_: blame
+_s_: status
+_h_: hunk
+_o_: open url
+_b_: blame
 
 _<Esc>_
 ]],
