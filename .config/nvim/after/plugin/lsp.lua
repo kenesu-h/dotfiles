@@ -1,3 +1,12 @@
+-- https://github.com/neovim/neovim/issues/23725#issuecomment-1561364086
+local ok, wf = pcall(require, "vim.lsp._watchfiles")
+if ok then
+  -- disable lsp watcher. Too slow on linux
+  wf._watchfunc = function()
+    return function() end
+  end
+end
+
 require("neodev").setup({})
 
 local lsp = require("lsp-zero").preset({})
@@ -33,7 +42,6 @@ require("mason-lspconfig").setup({
 })
 
 local cmp = require("cmp")
-local luasnip = require("luasnip")
 
 vim.diagnostic.config({
   float = {
@@ -66,8 +74,6 @@ cmp.setup({
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
-      elseif luasnip.expandable() then
-        luasnip.expand()
       else
         fallback()
       end
@@ -84,14 +90,8 @@ cmp.setup({
       behavior = cmp.ConfirmBehavior.Replace,
     }),
   }),
-  snippet = {
-    expand = function(args)
-      require("luasnip").lsp_expand(args.body)
-    end,
-  },
   sources = cmp.config.sources({
-    { name = "nvim_lsp", keyword_length = 3, max_item_count = 10 },
-    { name = "luasnip", keyword_length = 3, max_item_count = 10 },
+    { name = "nvim_lsp" },
     { name = "copilot" },
   }),
 })
