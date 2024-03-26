@@ -136,11 +136,22 @@ function venv() {
       echo "No venv found."
       return
     fi
+
     source .venv/bin/activate
   elif [ "$1" = "install" ]; then
+    if [ -z "$VIRTUAL_ENV" ]; then
+      echo "No virtual environment is active."
+      return
+    fi
+
     [ -s requirements.txt ] && python -m pip install -r requirements.txt
     [ -s requirements-test.txt ] && python -m pip install -r requirements-test.txt
   elif [ "$1" = "uninstall" ]; then
+    if [ -z "$VIRTUAL_ENV" ]; then
+      echo "No virtual environment is active."
+      return
+    fi
+
     python -m pip uninstall -y -r <(python -m pip freeze)
   fi
 }
