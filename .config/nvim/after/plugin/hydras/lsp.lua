@@ -12,6 +12,7 @@ lsp.hydra = util.activator(util.base_hydra(
 _e_: errors
 _f_: focus
 
+_t_: type
 _d_: definition
 _r_: references
 _n_: name
@@ -38,6 +39,7 @@ _<Esc>_
     },
 
     -- Other
+    { "t", vim.lsp.buf.hover },
     { "d", builtin.lsp_definitions },
     { "r", builtin.lsp_references },
 
