@@ -101,6 +101,20 @@ cmp.setup({
       behavior = cmp.ConfirmBehavior.Replace,
     }),
   }),
+  sorting = {
+    comparators = {
+      cmp.config.compare.exact,
+      require("copilot_cmp.comparators").prioritize,
+      cmp.config.compare.offset,
+      cmp.config.compare.score,
+      cmp.config.compare.recently_used,
+      cmp.config.compare.locality,
+      cmp.config.compare.kind,
+      cmp.config.compare.sort_text,
+      cmp.config.compare.length,
+      cmp.config.compare.order,
+    },
+  },
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)
