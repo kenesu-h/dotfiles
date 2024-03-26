@@ -12,9 +12,10 @@ lsp.hydra = util.activator(util.base_hydra(
 _e_: errors
 _f_: focus
 
-_d_: definition   _n_: name
-_r_: references   _b_: back
-_c_: context
+_d_: definition
+_r_: references
+_n_: name
+_b_: back
 
 _<Esc>_
 ]],
@@ -37,12 +38,6 @@ _<Esc>_
     },
 
     -- Other
-    {
-      "c",
-      function()
-        vim.cmd("TSContextToggle")
-      end,
-    },
     { "d", builtin.lsp_definitions },
     { "r", builtin.lsp_references },
 

@@ -42,6 +42,7 @@ require("mason-lspconfig").setup({
 })
 
 local cmp = require("cmp")
+local luasnip = require("luasnip")
 
 vim.diagnostic.config({
   float = {
@@ -74,6 +75,8 @@ cmp.setup({
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
+      elseif luasnip.expandable() then
+        luasnip.expand()
       else
         fallback()
       end
@@ -90,6 +93,11 @@ cmp.setup({
       behavior = cmp.ConfirmBehavior.Replace,
     }),
   }),
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
   sources = cmp.config.sources({
     { name = "nvim_lsp" },
     { name = "copilot" },

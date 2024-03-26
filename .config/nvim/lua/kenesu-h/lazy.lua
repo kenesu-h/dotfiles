@@ -42,6 +42,7 @@ require("lazy").setup({
     tag = "0.1.2",
     dependencies = { "nvim-lua/plenary.nvim" },
   },
+  { "nvim-telescope/telescope-ui-select.nvim" },
 
   -- Treesitter / LSP
   {
@@ -77,6 +78,8 @@ require("lazy").setup({
       -- Autocompletion
       { "hrsh7th/nvim-cmp" },
       { "hrsh7th/cmp-nvim-lsp" },
+      { "L3MON4D3/LuaSnip" },
+      { "saadparwaiz1/cmp_luasnip" },
     },
   },
 
