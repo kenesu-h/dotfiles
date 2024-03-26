@@ -10,13 +10,8 @@ export SSH_AUTH_SOCK=~/.ssh/ssh-agent.$HOSTNAME.sock
 ssh-add -l 2 > /dev/null > /dev/null
 if [ $? -ge 2 ]; then
   ssh-agent -a "$SSH_AUTH_SOCK" > /dev/null
-  if [[ $(uname) == "Darwin" ]]; then
-    [ -s "$HOME/.ssh/id_rsa" ] && ssh-add --apple-use-keychain "$HOME/.ssh/id_rsa"
-    [ -s "$HOME/.ssh/id_ed25519" ] && ssh-add --apple-use-keychain "$HOME/.ssh/id_ed25519"
-  else
-    [ -s "$HOME/.ssh/id_rsa" ] && ssh-add "$HOME/.ssh/id_rsa"
-    [ -s "$HOME/.ssh/id_ed25519" ] && ssh-add "$HOME/.ssh/id_ed25519"
-  fi
+  [ -s "$HOME/.ssh/id_rsa" ] && ssh-add "$HOME/.ssh/id_rsa"
+  [ -s "$HOME/.ssh/id_ed25519" ] && ssh-add "$HOME/.ssh/id_ed25519"
 fi
 
 # Initialization code that may require console input (password prompts, [y/n]
