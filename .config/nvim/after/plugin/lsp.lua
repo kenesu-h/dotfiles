@@ -92,6 +92,6 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = "nvim_lsp", keyword_length = 3, max_item_count = 10 },
     { name = "luasnip", keyword_length = 3, max_item_count = 10 },
-    { name = "copilot", keyword_length = 3, max_item_count = 10 },
+    { name = "copilot" },
   }),
 })

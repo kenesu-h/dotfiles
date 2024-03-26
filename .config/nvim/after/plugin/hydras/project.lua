@@ -12,7 +12,6 @@ project.hydra = util.activator(util.base_hydra(
   [[
 _f_: files
 _g_: grep
-_c_: comments
 
 _t_: tags
 _m_: mark
@@ -25,12 +24,6 @@ _<Esc>_
   {
     { "f", builtin.find_files },
     { "g", builtin.live_grep },
-    {
-      "c",
-      function()
-        vim.cmd("TodoTelescope")
-      end,
-    },
 
     { "t", grapple.toggle_tags },
     { "m", grapple.toggle },

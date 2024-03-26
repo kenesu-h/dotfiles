@@ -221,7 +221,7 @@ require("lazy").setup({
       local leap = require("leap")
       leap.add_default_mappings()
 
-      vim.keymap.set({ "n", "v", "o" }, "f", function()
+      vim.keymap.set({ "n", "v", "o" }, "s", function()
         local focusable_windows = vim.tbl_filter(function(win)
           return vim.api.nvim_win_get_config(win).focusable
         end, vim.api.nvim_tabpage_list_wins(0))
@@ -256,39 +256,34 @@ require("lazy").setup({
     version = "*",
     config = function()
       require("mini.comment").setup()
-      require("mini.surround").setup()
     end,
-  },
-  {
-    "folke/todo-comments.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    opts = {},
   },
   {
     "folke/neodev.nvim",
     opts = {},
   },
   {
+    "zbirenbaum/copilot.lua",
+    config = function()
+      require("copilot").setup({
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+        filetypes = {
+          lua = true,
+          python = true,
+          javascript = true,
+          javascriptreact = true,
+          typescript = true,
+          typescriptreact = true,
+          ["*"] = false,
+        },
+      })
+    end,
+  },
+  {
     "zbirenbaum/copilot-cmp",
     dependencies = {
-      {
-        "zbirenbaum/copilot.lua",
-        config = function()
-          require("copilot").setup({
-            suggestion = { enabled = false },
-            panel = { enabled = false },
-            filetypes = {
-              lua = true,
-              python = true,
-              javascript = true,
-              javascriptreact = true,
-              typescript = true,
-              typescriptreact = true,
-              ["*"] = false,
-            },
-          })
-        end,
-      },
+      { "zbirenbaum/copilot.lua" },
     },
     config = function()
       require("copilot_cmp").setup()
