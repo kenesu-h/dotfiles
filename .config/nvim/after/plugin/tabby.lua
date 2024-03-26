@@ -1,26 +1,29 @@
-local theme = {
-  fill = "TabLineFill",
-  head = "TabLine",
-  current_tab = "TabLineSel",
-  tab = "TabLine",
-  win = "TabLine",
-  tail = "TabLine",
+local colors = require("catppuccin.palettes").get_palette("mocha")
+
+local TabbyColors = {
+  TabLine = { bg = colors.base },
+  TabLineTab = { bg = colors.surface0 },
+  TabLineTabSel = { bg = colors.base },
+  TabLineNumber = { fg = colors.base, bg = colors.blue },
+  TabLineNumberSel = { fg = colors.base, bg = colors.peach },
 }
+
 require("tabby.tabline").set(function(line)
   return {
+    { " ", hl = TabbyColors.TabLine },
     line.tabs().foreach(function(tab)
-      local hl = tab.is_current() and theme.current_tab or theme.tab
+      local base_hl = tab.is_current() and TabbyColors.TabLineTabSel or TabbyColors.TabLineTab
+      local number_hl = tab.is_current() and TabbyColors.TabLineNumberSel or TabbyColors.TabLineNumber
       return {
-        line.sep("", hl, theme.fill),
-        tab.is_current() and "" or "󰆣",
-        tab.number(),
-        tab.name(),
-        tab.close_btn(""),
-        line.sep("  ", hl, theme.fill),
-        hl = hl,
-        margin = " ",
+        {
+          line.sep("", number_hl, TabbyColors.TabLine),
+          { tab.number() .. " ", hl = number_hl },
+        },
+        { " " .. tab.name(), hl = base_hl },
+        line.sep("  ", base_hl, TabbyColors.TabLine),
+        hl = base_hl,
       }
     end),
-    hl = theme.fill,
+    hl = TabbyColors.TabLine,
   }
 end)
