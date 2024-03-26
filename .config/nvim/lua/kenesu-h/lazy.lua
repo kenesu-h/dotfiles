@@ -212,12 +212,10 @@ require("lazy").setup({
     config = function()
       local leap = require("leap")
       leap.add_default_mappings()
+      leap.opts.safe_labels = {}
 
       vim.keymap.set({ "n", "v", "o" }, "s", function()
-        local focusable_windows = vim.tbl_filter(function(win)
-          return vim.api.nvim_win_get_config(win).focusable
-        end, vim.api.nvim_tabpage_list_wins(0))
-        leap.leap({ target_windows = focusable_windows })
+        leap.leap({ target_windows = { vim.api.nvim_get_current_win() } })
       end)
     end,
   },
