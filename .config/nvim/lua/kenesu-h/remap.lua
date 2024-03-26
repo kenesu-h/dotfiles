@@ -29,6 +29,16 @@ remap("v", "K", function()
   vim.cmd("normal! gv")
 end)
 
+remap("v", ">", function()
+  vim.cmd("normal! >")
+  vim.cmd("normal! gv")
+end)
+
+remap("v", "<", function()
+  vim.cmd("normal! <")
+  vim.cmd("normal! gv")
+end)
+
 remap("n", "<C-d>", "<C-d>zz")
 remap("n", "<C-u>", "<C-u>zz")
 remap("n", "n", "nzzzv")
