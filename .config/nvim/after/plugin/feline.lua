@@ -184,30 +184,6 @@ components.diagnostic_info = {
   },
 }
 
-local lsp = require("feline.providers.lsp")
-components.lsp_icon = {
-  provider = "",
-  hl = {
-    fg = FelineColor.BLACK,
-    bg = ExtraColor.PINK,
-  },
-  left_sep = Separator.LEFT,
-  right_sep = Separator.MIDDLE,
-  enabled = lsp.is_lsp_attached,
-}
-
-components.lsp_body = {
-  provider = function()
-    return " " .. lsp.lsp_client_names()
-  end,
-  hl = {
-    fg = FelineColor.WHITE,
-    bg = FelineColor.BLACK,
-  },
-  right_sep = Separator.RIGHT,
-  enabled = lsp.is_lsp_attached,
-}
-
 local cursor = require("feline.providers.cursor")
 components.cursor_icon = {
   provider = "󰈔",
@@ -249,9 +225,6 @@ local left = {
 }
 
 local right = {
-  components.lsp_icon,
-  components.lsp_body,
-
   components.cursor_icon,
   components.cursor_body,
 }
