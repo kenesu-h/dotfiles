@@ -1,9 +1,9 @@
 local colors = require("catppuccin.palettes").get_palette("mocha")
 
 local TabbyColors = {
-  TabLine = { bg = colors.base },
+  TabLine = { bg = colors.crust },
   TabLineTab = { bg = colors.surface0 },
-  TabLineTabSel = { bg = colors.base },
+  TabLineTabSel = { bg = colors.crust },
   TabLineNumber = { fg = colors.base, bg = colors.blue },
   TabLineNumberSel = { fg = colors.base, bg = colors.peach },
 }
