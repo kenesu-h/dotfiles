@@ -9,12 +9,14 @@ local builtin = require("telescope.builtin")
 lsp.hydra = util.activator(util.base_hydra(
   "LSP",
   [[
+_s_: symbols
 _e_: errors
-_f_: focus
+_E_: focus error
 
-_t_: type
 _d_: definition
+_D_: focus definition
 _r_: references
+
 _n_: name
 _b_: back
 
@@ -22,7 +24,7 @@ _<Esc>_
 ]],
   nil,
   {
-    -- Errors
+    { "s", builtin.lsp_document_symbols },
     {
       "e",
       function()
@@ -30,17 +32,21 @@ _<Esc>_
       end,
     },
     {
-      "f",
+      "E",
       function()
         vim.diagnostic.open_float()
-        -- Calling open_float again focuses the diagnostic window
-        vim.diagnostic.open_float()
+        vim.diagnostic.open_float() -- Focus the diagnostic window
       end,
     },
 
-    -- Other
-    { "t", vim.lsp.buf.hover },
     { "d", builtin.lsp_definitions },
+    {
+      "D",
+      function()
+        vim.lsp.buf.hover()
+        vim.lsp.buf.hover() -- Focus the hover window
+      end,
+    },
     { "r", builtin.lsp_references },
 
     { "n", vim.lsp.buf.rename },

@@ -12,6 +12,8 @@ project.hydra = util.activator(util.base_hydra(
   [[
 _f_: files
 _g_: grep
+_s_: symbols
+_r_: resume
 
 _t_: tags
 _m_: mark
@@ -24,6 +26,15 @@ _<Esc>_
   {
     { "f", builtin.find_files },
     { "g", builtin.live_grep },
+    {
+      "s",
+      function()
+        vim.ui.input({ prompt = "Workspace symbols: " }, function(query)
+          builtin.lsp_workspace_symbols({ query = query })
+        end)
+      end,
+    },
+    { "r", builtin.resume },
 
     { "t", grapple.toggle_tags },
     { "m", grapple.toggle },
