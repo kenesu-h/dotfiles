@@ -22,7 +22,6 @@ lsp.on_attach(function(_, bufnr)
   lsp.default_keymaps({ buffer = bufnr })
 end)
 
--- lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
 lspconfig.tsserver.setup({
   init_options = {
     preferences = {
@@ -30,6 +29,7 @@ lspconfig.tsserver.setup({
     },
   },
 })
+
 lsp.setup()
 
 require("mason").setup({})

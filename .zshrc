@@ -5,15 +5,6 @@ if [ -z "$TMUX" ]; then
   exec tmux new-session -A -s workspace
 fi
 
-# https://unix.stackexchange.com/a/132117
-export SSH_AUTH_SOCK=~/.ssh/ssh-agent.$HOSTNAME.sock
-ssh-add -l 2 > /dev/null > /dev/null
-if [ $? -ge 2 ]; then
-  ssh-agent -a "$SSH_AUTH_SOCK" > /dev/null
-  [ -s "$HOME/.ssh/id_rsa" ] && ssh-add "$HOME/.ssh/id_rsa"
-  [ -s "$HOME/.ssh/id_ed25519" ] && ssh-add "$HOME/.ssh/id_ed25519"
-fi
-
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
@@ -130,6 +121,28 @@ function cloud-sql-proxy() {
 }
 
 # Aliases
+# https://stackoverflow.com/a/65375231
+function fzcd() {
+  if [ -z "$1" ]; then
+    cd "$(find . -type d | fzf)"
+    return
+  fi
+
+  cd "$(find "$1" -type d | fzf)"
+}
+
+# https://stackoverflow.com/a/23442470
+alias cdroot="cd $(git root)"
+
+function jqfmt() {
+  if [ -z "$1" ]; then
+    echo "File path required."
+    return
+  fi
+
+  jq . "$1" | sponge "$1"
+}
+
 function venv() {
   if [ -z "$1" ]; then
     if [ ! -d ".venv" ]; then
