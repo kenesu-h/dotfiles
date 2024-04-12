@@ -132,7 +132,9 @@ function fzcd() {
 }
 
 # https://stackoverflow.com/a/23442470
-alias cdroot="cd $(git root)"
+function cdroot() {
+  cd "$(git root)"
+}
 
 function jqfmt() {
   if [ -z "$1" ]; then
