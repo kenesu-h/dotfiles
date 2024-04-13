@@ -250,44 +250,4 @@ require("lazy").setup({
     "folke/neodev.nvim",
     opts = {},
   },
-  {
-    "zbirenbaum/copilot.lua",
-    config = function()
-      require("copilot").setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-        filetypes = {
-          lua = true,
-          python = true,
-          javascript = true,
-          javascriptreact = true,
-          typescript = true,
-          typescriptreact = true,
-          ["*"] = false,
-        },
-      })
-    end,
-  },
-  {
-    "zbirenbaum/copilot-cmp",
-    dependencies = {
-      { "zbirenbaum/copilot.lua" },
-    },
-    config = function()
-      require("copilot_cmp").setup()
-    end,
-  },
-  {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    branch = "canary",
-    dependencies = {
-      { "zbirenbaum/copilot.lua" },
-      { "nvim-lua/plenary.nvim" },
-    },
-    config = function()
-      if vim.fn.findfile("hosts.json", os.getenv("HOME") .. "/.config/github-copilot") ~= "" then
-        require("CopilotChat").setup({})
-      end
-    end,
-  },
 })

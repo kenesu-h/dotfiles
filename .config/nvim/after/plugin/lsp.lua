@@ -128,7 +128,6 @@ cmp.setup({
   sorting = {
     comparators = {
       cmp.config.compare.exact,
-      require("copilot_cmp.comparators").prioritize,
       cmp.config.compare.offset,
       cmp.config.compare.score,
       cmp.config.compare.recently_used,
@@ -146,6 +145,5 @@ cmp.setup({
   },
   sources = cmp.config.sources({
     { name = "nvim_lsp" },
-    { name = "copilot" },
   }),
 })
