@@ -1,3 +1,4 @@
+local actions = require("telescope.actions")
 local telescope = require("telescope")
 
 local width = 0.95
@@ -24,6 +25,11 @@ for hl, col in pairs(TelescopeColors) do
   vim.api.nvim_set_hl(0, hl, col)
 end
 
+local history_mappings = {
+  ["<Up>"] = actions.cycle_history_prev,
+  ["<Down>"] = actions.cycle_history_next,
+}
+
 telescope.setup({
   defaults = {
     borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
@@ -37,6 +43,10 @@ telescope.setup({
         width = width,
         height = height,
       },
+    },
+    mappings = {
+      n = history_mappings,
+      i = history_mappings,
     },
   },
 })

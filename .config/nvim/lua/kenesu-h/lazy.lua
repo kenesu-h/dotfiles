@@ -99,9 +99,7 @@ require("lazy").setup({
           typescript = js_formatters,
           typescriptreact = js_formatters,
         },
-        format_after_save = {
-          lsp_fallback = true,
-        },
+        format_after_save = {},
       })
     end,
   },
@@ -124,7 +122,7 @@ require("lazy").setup({
 
       vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost" }, {
         callback = function()
-          lint.try_lint()
+          lint.try_lint(nil, { ignore_errors = true })
         end,
       })
     end,

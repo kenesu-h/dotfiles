@@ -22,11 +22,35 @@ lsp.on_attach(function(_, bufnr)
   lsp.default_keymaps({ buffer = bufnr })
 end)
 
+local node_lib = function()
+  local handle = io.popen("npm list -g | head -1")
+  if not handle then
+    return nil
+  end
+
+  local result = handle:read("*a")
+  handle:close()
+
+  return result:gsub("[\n\r]", "")
+end
+
 lspconfig.tsserver.setup({
   init_options = {
     preferences = {
       importModuleSpecifier = "non-relative",
     },
+    plugins = {
+      {
+        name = "@vue/typescript-plugin",
+        location = node_lib() .. "/node_modules/@vue/typescript-plugin",
+        languages = { "typescript", "vue" },
+      },
+    },
+  },
+  filetypes = {
+    "javascript",
+    "typescript",
+    "vue",
   },
 })
 
