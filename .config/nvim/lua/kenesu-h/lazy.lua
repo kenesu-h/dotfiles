@@ -247,6 +247,13 @@ require("lazy").setup({
     end,
   },
   {
+    "numToStr/Comment.nvim",
+    config = function()
+      require("Comment").setup()
+    end,
+    lazy = false,
+  },
+  {
     "folke/neodev.nvim",
     opts = {},
   },
