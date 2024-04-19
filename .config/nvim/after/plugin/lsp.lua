@@ -74,13 +74,13 @@ vim.diagnostic.config({
   },
 })
 
-local colors = require("catppuccin.palettes").get_palette("frappe")
+local rose_pine = require("rose-pine.palette")
 local CmpColors = {
-  Pmenu = { bg = colors.mantle },
-  PmenuSel = { fg = colors.flamingo, bg = colors.base, bold = true },
+  Pmenu = { bg = rose_pine.surface },
+  PmenuSel = { fg = rose_pine.rose, bg = rose_pine.overlay },
 
-  NormalFloat = { bg = colors.mantle },
-  FloatBorder = { bg = colors.mantle },
+  NormalFloat = { bg = rose_pine.surface },
+  FloatBorder = { bg = rose_pine.surface },
 }
 
 for hl, col in pairs(CmpColors) do

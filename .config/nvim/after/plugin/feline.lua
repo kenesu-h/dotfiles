@@ -1,5 +1,5 @@
-local catppuccin = require("catppuccin.palettes.mocha")
 local feline = require("feline")
+local rose_pine = require("rose-pine.palette")
 
 local Separator = {
   LEFT = " ",
@@ -22,36 +22,36 @@ local FelineColor = {
   VIOLET = "violet",
 }
 
-local ExtraColor = {
-  ROSEWATER = "rosewater",
-  FLAMINGO = "flamingo",
-  PINK = "pink",
-  RED = "red",
-  MAROON = "maroon",
-  SAPPHIRE = "sapphire",
+local RosePineExtra = {
+  MUTED = "muted",
+  SUBTLE = "subtle",
+  LOVE = "love",
+  HIGHLIGHT_LOW = "highlight_low",
+  HIGHLIGHT_MED = "highlight_med",
+  HIGHLIGHT_HIGH = "highlight_high",
 }
 
-local theme = {
-  [FelineColor.FG] = catppuccin.text,
-  [FelineColor.BG] = catppuccin.mantle,
-  [FelineColor.BLACK] = catppuccin.surface0,
-  [FelineColor.WHITE] = catppuccin.text,
-  [FelineColor.MAGENTA] = catppuccin.mauve,
-  [FelineColor.ORANGE] = catppuccin.peach,
-  [FelineColor.YELLOW] = catppuccin.yellow,
-  [FelineColor.GREEN] = catppuccin.green,
-  [FelineColor.CYAN] = catppuccin.teal,
-  [FelineColor.SKY_BLUE] = catppuccin.sky,
-  [FelineColor.OCEAN_BLUE] = catppuccin.blue,
-  [FelineColor.VIOLET] = catppuccin.lavender,
+local rose_pine_theme = {
+  [FelineColor.FG] = rose_pine.text,
+  [FelineColor.BG] = rose_pine.surface,
+  [FelineColor.BLACK] = rose_pine.base,
+  [FelineColor.WHITE] = rose_pine.text,
+  [FelineColor.MAGENTA] = rose_pine.iris,
+  [FelineColor.ORANGE] = rose_pine.rose,
+  [FelineColor.YELLOW] = rose_pine.gold,
+  [FelineColor.GREEN] = rose_pine.foam,
+  [FelineColor.CYAN] = rose_pine.foam,
+  [FelineColor.SKY_BLUE] = rose_pine.foam,
+  [FelineColor.OCEAN_BLUE] = rose_pine.pine,
+  [FelineColor.VIOLET] = rose_pine.iris,
 
   -- Colors that aren't part of the default feline theme
-  [ExtraColor.ROSEWATER] = catppuccin.rosewater,
-  [ExtraColor.FLAMINGO] = catppuccin.flamingo,
-  [ExtraColor.PINK] = catppuccin.pink,
-  [ExtraColor.RED] = catppuccin.red,
-  [ExtraColor.MAROON] = catppuccin.maroon,
-  [ExtraColor.SAPPHIRE] = catppuccin.sapphire,
+  [RosePineExtra.MUTED] = rose_pine.muted,
+  [RosePineExtra.SUBTLE] = rose_pine.subtle,
+  [RosePineExtra.LOVE] = rose_pine.love,
+  [RosePineExtra.HIGHLIGHT_LOW] = rose_pine.highlight_low,
+  [RosePineExtra.HIGHLIGHT_MED] = rose_pine.highlight_med,
+  [RosePineExtra.HIGHLIGHT_HIGH] = rose_pine.highlight_high,
 }
 
 local components = {}
@@ -90,7 +90,7 @@ components.branch_icon = {
   provider = "",
   hl = {
     fg = FelineColor.BLACK,
-    bg = ExtraColor.PINK,
+    bg = FelineColor.ORANGE,
   },
   left_sep = Separator.LEFT,
   right_sep = Separator.MIDDLE,
@@ -120,7 +120,7 @@ components.diff_added = {
 components.diff_removed = {
   provider = git.git_diff_removed,
   hl = {
-    fg = ExtraColor.RED,
+    fg = RosePineExtra.LOVE,
     bg = FelineColor.BLACK,
   },
   enabled = is_git_active,
@@ -159,7 +159,7 @@ components.file_info = {
 components.diagnostic_errors = {
   provider = "diagnostic_errors",
   hl = {
-    fg = ExtraColor.RED,
+    fg = RosePineExtra.LOVE,
   },
 }
 
@@ -242,7 +242,7 @@ feline.setup({
       right,
     },
   },
-  theme = theme,
+  theme = rose_pine_theme,
   vi_mode_colors = {
     NORMAL = FelineColor.GREEN,
     OP = FelineColor.GREEN,
@@ -250,7 +250,7 @@ feline.setup({
     VISUAL = FelineColor.MAGENTA,
     LINES = FelineColor.MAGENTA,
     BLOCK = FelineColor.MAGENTA,
-    REPLACE = ExtraColor.RED,
+    REPLACE = RosePineExtra.LOVE,
     COMMAND = FelineColor.ORANGE,
   },
 })

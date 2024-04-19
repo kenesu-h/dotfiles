@@ -4,21 +4,21 @@ local telescope = require("telescope")
 local width = 0.95
 local height = 0.95
 
-local colors = require("catppuccin.palettes").get_palette("frappe")
+local rose_pine = require("rose-pine.palette")
 local TelescopeColors = {
-  TelescopeMatching = { fg = colors.flamingo },
-  TelescopeSelection = { fg = colors.text, bg = colors.base, bold = true },
+  TelescopeMatching = { fg = rose_pine.rose },
+  TelescopeSelection = { fg = rose_pine.text, bg = rose_pine.highlight_med },
 
-  TelescopePromptPrefix = { bg = colors.mantle },
-  TelescopePromptNormal = { bg = colors.base },
-  TelescopeResultsNormal = { bg = colors.mantle },
-  TelescopePreviewNormal = { bg = colors.mantle },
-  TelescopePromptBorder = { bg = colors.base },
-  TelescopeResultsBorder = { bg = colors.mantle },
-  TelescopePreviewBorder = { bg = colors.mantle },
-  TelescopePromptTitle = { bg = colors.pink, fg = colors.mantle },
-  TelescopeResultsTitle = { bg = colors.green, fg = colors.mantle },
-  TelescopePreviewTitle = { bg = colors.green, fg = colors.mantle },
+  TelescopePromptPrefix = { bg = rose_pine.surface },
+  TelescopePromptNormal = { bg = rose_pine.overlay },
+  TelescopeResultsNormal = { bg = rose_pine.surface },
+  TelescopePreviewNormal = { bg = rose_pine.surface },
+  TelescopePromptBorder = { bg = rose_pine.overlay },
+  TelescopeResultsBorder = { bg = rose_pine.surface },
+  TelescopePreviewBorder = { bg = rose_pine.surface },
+  TelescopePromptTitle = { bg = rose_pine.rose, fg = rose_pine.surface },
+  TelescopeResultsTitle = { bg = rose_pine.foam, fg = rose_pine.surface },
+  TelescopePreviewTitle = { bg = rose_pine.foam, fg = rose_pine.surface },
 }
 
 for hl, col in pairs(TelescopeColors) do

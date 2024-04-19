@@ -1,11 +1,11 @@
-local colors = require("catppuccin.palettes").get_palette("mocha")
+local rose_pine = require("rose-pine.palette")
 
 local TabbyColors = {
-  TabLine = { bg = colors.crust },
-  TabLineTab = { bg = colors.surface0 },
-  TabLineTabSel = { bg = colors.crust },
-  TabLineNumber = { fg = colors.base, bg = colors.blue },
-  TabLineNumberSel = { fg = colors.base, bg = colors.peach },
+  TabLine = { bg = rose_pine.surface },
+  TabLineTab = { bg = rose_pine.base },
+  TabLineTabSel = { bg = rose_pine.surface },
+  TabLineNumber = { fg = rose_pine.base, bg = rose_pine.foam },
+  TabLineNumberSel = { fg = rose_pine.base, bg = rose_pine.rose },
 }
 
 require("tabby.tabline").set(function(line)

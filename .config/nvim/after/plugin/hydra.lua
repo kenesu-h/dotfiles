@@ -7,10 +7,10 @@ local tab = require("hydras.tab")
 local util = require("hydras.util")
 local window = require("hydras.window")
 
-local colors = require("catppuccin.palettes").get_palette("frappe")
+local rose_pine = require("rose-pine.palette")
 local HydraColors = {
-  HydraHint = { bg = colors.mantle },
-  HydraBorder = { bg = colors.mantle },
+  HydraHint = { bg = rose_pine.surface },
+  HydraBorder = { bg = rose_pine.surface },
 }
 
 for hl, col in pairs(HydraColors) do

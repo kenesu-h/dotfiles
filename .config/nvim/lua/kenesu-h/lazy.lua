@@ -13,26 +13,23 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   {
-    "catppuccin/nvim",
-    name = "catppuccin",
+    "rose-pine/neovim",
+    name = "rose-pine",
     priority = 1000,
     config = function()
-      require("catppuccin").setup({
-        transparent_background = true,
-        no_italic = true,
-        integrations = {
-          leap = true,
+      require("rose-pine").setup({
+        variant = "moon",
+        styles = {
+          bold = false,
+          italic = false,
+          transparency = false,
         },
-        custom_highlights = function(colors)
-          return {
-            CursorLineNr = { fg = colors.green },
-            CursorLine = { bg = colors.none },
-            TreesitterContext = { bg = colors.crust },
-          }
-        end,
+        highlight_groups = {
+          CursorLineNr = { fg = "foam" },
+          CursorLine = { bg = "none" },
+        },
       })
-
-      vim.cmd.colorscheme("catppuccin-macchiato")
+      vim.cmd.colorscheme("rose-pine")
     end,
   },
 
@@ -52,9 +49,10 @@ require("lazy").setup({
   {
     "nvim-treesitter/nvim-treesitter-context",
     config = function()
-      local colors = require("catppuccin.palettes").get_palette("mocha")
+      local rose_pine = require("rose-pine")
       local ContextColors = {
-        TreesitterContextSeparator = { bg = colors.mantle },
+        TreesitterContext = { bg = rose_pine.overlay },
+        TreesitterContextSeparator = { bg = rose_pine.base },
       }
 
       for hl, col in pairs(ContextColors) do
@@ -191,17 +189,17 @@ require("lazy").setup({
   {
     "mvllow/modes.nvim",
     config = function()
-      local catppuccin = require("catppuccin.palettes.mocha")
+      local rose_pine = require("rose-pine.palette")
 
       require("modes").setup({
         colors = {
-          copy = catppuccin.green,
-          delete = catppuccin.red,
-          insert = catppuccin.peach,
-          visual = catppuccin.mauve,
+          copy = rose_pine.foam,
+          delete = rose_pine.love,
+          insert = rose_pine.gold,
+          visual = rose_pine.iris,
         },
 
-        line_opacity = 0.25,
+        line_opacity = 0.1,
       })
     end,
   },
