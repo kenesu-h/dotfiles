@@ -8,6 +8,17 @@ local TabbyColors = {
   TabLineNumberSel = { fg = rose_pine.base, bg = rose_pine.rose },
 }
 
+-- https://github.com/nanozuki/tabby.nvim/issues/125#issuecomment-1732478581
+local function tab_modified(tab)
+  local wins = require("tabby.module.api").get_tab_wins(tab)
+  for _, x in pairs(wins) do
+    if vim.bo[vim.api.nvim_win_get_buf(x)].modified then
+      return "● "
+    end
+  end
+  return ""
+end
+
 require("tabby.tabline").set(function(line)
   return {
     { " ", hl = TabbyColors.TabLine },
@@ -19,7 +30,7 @@ require("tabby.tabline").set(function(line)
           line.sep("", number_hl, TabbyColors.TabLine),
           { tab.number() .. " ", hl = number_hl },
         },
-        { " " .. tab.name(), hl = base_hl },
+        { " " .. tab.name() .. " " .. tab_modified(tab.id), hl = base_hl },
         line.sep("  ", base_hl, TabbyColors.TabLine),
         hl = base_hl,
       }
