@@ -18,10 +18,6 @@ for type, icon in pairs(signs) do
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
-lsp.on_attach(function(_, bufnr)
-  lsp.default_keymaps({ buffer = bufnr })
-end)
-
 local node_lib = function()
   local handle = io.popen("npm list -g | head -1")
   if not handle then

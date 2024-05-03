@@ -1,6 +1,7 @@
 --- @module "hydras.git"
 local git = {}
 
+local gitsigns = require("gitsigns")
 local hunk = require("hydras.hunk")
 local util = require("hydras.util")
 
@@ -12,7 +13,6 @@ git.hydra = util.activator(util.base_hydra(
   [[
 _s_: status
 _h_: hunk
-_o_: open url
 _b_: blame
 
 _<Esc>_
@@ -27,20 +27,8 @@ _<Esc>_
         end
       end,
     },
-    {
-      "b",
-      function()
-        vim.cmd("GitBlameToggle")
-      end,
-    },
-
+    { "b", gitsigns.toggle_current_line_blame },
     { "h", hunk.hydra },
-    {
-      "o",
-      function()
-        vim.cmd("GitBlameOpenFileURL")
-      end,
-    },
   }
 ))
 

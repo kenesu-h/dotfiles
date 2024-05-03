@@ -22,7 +22,7 @@ require("lazy").setup({
         styles = {
           bold = false,
           italic = false,
-          transparency = false,
+          transparency = true,
         },
         highlight_groups = {
           CursorLineNr = { fg = "foam" },
@@ -39,7 +39,6 @@ require("lazy").setup({
     tag = "0.1.2",
     dependencies = { "nvim-lua/plenary.nvim" },
   },
-  { "nvim-telescope/telescope-ui-select.nvim" },
 
   -- Treesitter / LSP
   {
@@ -134,14 +133,10 @@ require("lazy").setup({
         yadm = {
           enable = true,
         },
+        current_line_blame_opts = {
+          delay = 0,
+        },
       })
-    end,
-  },
-  {
-    -- Use this for faster git blames and the ability to open current file's remote URL
-    "f-person/git-blame.nvim",
-    config = function()
-      vim.g.gitblame_enabled = false
     end,
   },
 
@@ -199,7 +194,7 @@ require("lazy").setup({
           visual = rose_pine.iris,
         },
 
-        line_opacity = 0.1,
+        line_opacity = 0.25,
       })
     end,
   },
@@ -218,7 +213,7 @@ require("lazy").setup({
   {
     "cbochs/grapple.nvim",
     dependencies = {
-      { "nvim-tree/nvim-web-devicons", lazy = true },
+      "nvim-tree/nvim-web-devicons",
     },
   },
   {
@@ -236,13 +231,6 @@ require("lazy").setup({
     "windwp/nvim-autopairs",
     event = "InsertEnter",
     opts = {},
-  },
-  {
-    "echasnovski/mini.nvim",
-    version = "*",
-    config = function()
-      require("mini.comment").setup()
-    end,
   },
   {
     "numToStr/Comment.nvim",
