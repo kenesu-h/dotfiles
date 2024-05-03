@@ -27,7 +27,7 @@ _g_: git
 
 _<Esc>_
 ]],
-  "<Leader>h",
+  "<Leader>",
   {
 
     { "w", window.hydra },
