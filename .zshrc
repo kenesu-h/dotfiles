@@ -121,14 +121,16 @@ function cloud-sql-proxy() {
 }
 
 # Aliases
+alias nvimdiff="nvim -d"
+
 # https://stackoverflow.com/a/65375231
 function fzcd() {
   if [ -z "$1" ]; then
-    cd "$(find . -type d | fzf)"
+    cd "$(fd . --type d | fzf)"
     return
   fi
 
-  cd "$(find "$1" -type d | fzf)"
+  cd "$(fd . "$1" --type d | fzf)"
 }
 
 # https://stackoverflow.com/a/23442470
