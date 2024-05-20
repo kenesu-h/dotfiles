@@ -133,6 +133,10 @@ function fzcd() {
   cd "$(fd . "$1" --type d | fzf)"
 }
 
+function fzcdroot() {
+  fzcd "$(git root)"
+}
+
 # https://stackoverflow.com/a/23442470
 function cdroot() {
   cd "$(git root)"

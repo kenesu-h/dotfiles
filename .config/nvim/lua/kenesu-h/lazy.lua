@@ -85,7 +85,7 @@ require("lazy").setup({
     "stevearc/conform.nvim",
     config = function()
       local conform = require("conform")
-      local js_formatters = { "prettier" }
+      local js_formatters = { "eslint" }
 
       conform.setup({
         formatters_by_ft = {
