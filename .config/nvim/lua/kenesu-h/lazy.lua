@@ -205,8 +205,9 @@ require("lazy").setup({
       leap.add_default_mappings()
       leap.opts.safe_labels = {}
 
-      vim.keymap.set({ "n", "v", "o" }, "s", function()
+      vim.keymap.set({ "n", "v" }, "s", function()
         leap.leap({ target_windows = { vim.api.nvim_get_current_win() } })
+        vim.cmd("normal! zz")
       end)
     end,
   },

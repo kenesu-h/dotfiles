@@ -39,8 +39,6 @@ remap("v", "<", function()
   vim.cmd("normal! gv")
 end)
 
-remap("n", "<C-d>", "<C-d>zz")
-remap("n", "<C-u>", "<C-u>zz")
 remap("n", "n", "nzzzv")
 remap("n", "N", "Nzzzv")
 
@@ -48,3 +46,8 @@ remap({ "n", "v" }, "p", "P")
 remap({ "n", "v" }, "gp", "`[v`]")
 remap({ "n", "v", "o" }, "x", "d")
 remap({ "n", "v" }, "d", '"_d')
+
+remap({ "n", "v" }, "j", "jzz")
+remap({ "n", "v" }, "k", "kzz")
+remap({ "n", "v" }, "<C-u>", "<C-u>zz")
+remap({ "n", "v" }, "<C-d>", "<C-d>zz")
