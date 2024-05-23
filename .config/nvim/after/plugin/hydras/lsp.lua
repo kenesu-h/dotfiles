@@ -9,7 +9,6 @@ local builtin = require("telescope.builtin")
 lsp.hydra = util.activator(util.base_hydra(
   "LSP",
   [[
-_a_: actions
 _s_: symbols
 _e_: errors
 _E_: focus error
@@ -26,7 +25,6 @@ _<Esc>_
 ]],
   nil,
   {
-    { "a", vim.lsp.buf.code_action },
     { "s", builtin.lsp_document_symbols },
     {
       "e",
