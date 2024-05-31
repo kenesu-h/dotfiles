@@ -59,6 +59,7 @@ require("lazy").setup({
       end
 
       require("treesitter-context").setup({
+        enable = false,
         separator = "─",
       })
     end,
@@ -182,30 +183,13 @@ require("lazy").setup({
     end,
   },
   {
-    "mvllow/modes.nvim",
-    config = function()
-      local rose_pine = require("rose-pine.palette")
-
-      require("modes").setup({
-        colors = {
-          copy = rose_pine.foam,
-          delete = rose_pine.love,
-          insert = rose_pine.gold,
-          visual = rose_pine.iris,
-        },
-
-        line_opacity = 0.25,
-      })
-    end,
-  },
-  {
     "ggandor/leap.nvim",
     config = function()
       local leap = require("leap")
       leap.add_default_mappings()
       leap.opts.safe_labels = {}
 
-      vim.keymap.set({ "n", "v" }, "s", function()
+      vim.keymap.set({ "n", "v", "o" }, "s", function()
         leap.leap({ target_windows = { vim.api.nvim_get_current_win() } })
         vim.cmd("normal! zz")
       end)
@@ -216,17 +200,6 @@ require("lazy").setup({
     dependencies = {
       "nvim-tree/nvim-web-devicons",
     },
-  },
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    main = "ibl",
-    config = function()
-      require("ibl").setup({
-        scope = {
-          show_start = false,
-        },
-      })
-    end,
   },
   {
     "windwp/nvim-autopairs",
