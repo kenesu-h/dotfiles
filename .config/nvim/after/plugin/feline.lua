@@ -58,7 +58,7 @@ local components = {}
 
 local vi_mode = require("feline.providers.vi_mode")
 components.mode_icon = {
-  provider = "",
+  provider = "❯",
   hl = function()
     return {
       fg = FelineColor.BLACK,

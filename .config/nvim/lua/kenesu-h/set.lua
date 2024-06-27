@@ -23,6 +23,8 @@ vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 
+vim.opt.showtabline = 2
+
 vim.opt.updatetime = 300
 
 vim.opt.colorcolumn = "120"
