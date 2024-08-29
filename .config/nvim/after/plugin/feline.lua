@@ -86,33 +86,10 @@ local function is_git_active()
   return git.git_branch() ~= ""
 end
 
-components.branch_icon = {
-  provider = "",
-  hl = {
-    fg = FelineColor.BLACK,
-    bg = FelineColor.ORANGE,
-  },
-  left_sep = Separator.LEFT,
-  right_sep = Separator.MIDDLE,
-  enabled = is_git_active,
-}
-
-components.branch_body = {
-  provider = function()
-    return " " .. git.git_branch()
-  end,
-  hl = {
-    fg = FelineColor.WHITE,
-    bg = FelineColor.BLACK,
-  },
-  enabled = is_git_active,
-}
-
 components.diff_added = {
   provider = git.git_diff_added,
   hl = {
     fg = FelineColor.GREEN,
-    bg = FelineColor.BLACK,
   },
   enabled = is_git_active,
 }
@@ -121,7 +98,6 @@ components.diff_removed = {
   provider = git.git_diff_removed,
   hl = {
     fg = RosePineExtra.LOVE,
-    bg = FelineColor.BLACK,
   },
   enabled = is_git_active,
 }
@@ -130,7 +106,6 @@ components.diff_changed = {
   provider = git.git_diff_changed,
   hl = {
     fg = FelineColor.YELLOW,
-    bg = FelineColor.BLACK,
   },
   enabled = is_git_active,
 }
@@ -210,21 +185,18 @@ local left = {
   components.mode_icon,
   components.mode_body,
 
-  components.branch_icon,
-  components.branch_body,
+  components.file_info,
   components.diff_added,
   components.diff_removed,
   components.diff_changed,
-  components.git_right_sep,
+}
 
-  components.file_info,
+local right = {
   components.diagnostic_errors,
   components.diagnostic_warnings,
   components.diagnostic_info,
   components.diagnostic_hints,
-}
 
-local right = {
   components.cursor_icon,
   components.cursor_body,
 }

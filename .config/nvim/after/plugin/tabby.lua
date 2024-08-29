@@ -22,12 +22,24 @@ local function tab_modified(tab)
 end
 
 require("tabby.tabline").set(function(line)
+  ---@diagnostic disable-next-line: undefined-field
+  local branch = vim.b.gitsigns_head or ""
+
   return {
-    { " 󰖲 ", hl = TabbyColors.TabLineIcon },
     {
-      vim.fn.fnamemodify(vim.fn.getcwd(), ":t") .. " ",
-      hl = TabbyColors.TabLineWorkspace,
+      { "  " },
+      { vim.fn.fnamemodify(vim.fn.getcwd(), ":t") .. " " },
     },
+    branch ~= "" and {
+      {
+        "  ",
+        hl = TabbyColors.TabLineIcon,
+      },
+      {
+        branch .. " ",
+        hl = TabbyColors.TabLineWorkspace,
+      },
+    } or {},
     line.tabs().foreach(function(tab)
       local base_hl = tab.is_current() and TabbyColors.TabLineTabSel or TabbyColors.TabLineTab
       return {

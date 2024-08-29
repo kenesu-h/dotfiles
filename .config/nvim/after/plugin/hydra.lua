@@ -7,6 +7,7 @@ local tab = require("hydras.tab")
 local util = require("hydras.util")
 local window = require("hydras.window")
 
+local chat = require("CopilotChat")
 local rose_pine = require("rose-pine.palette")
 local HydraColors = {
   HydraHint = { bg = rose_pine.surface },
@@ -24,6 +25,7 @@ _w_: windows  _p_: project
 _t_: tabs     _l_: lsp
 
 _g_: git
+_c_: copilot chat
 
 _<Esc>_
 ]],
@@ -37,5 +39,12 @@ _<Esc>_
     { "l", lsp.hydra },
 
     { "g", git.hydra },
+    {
+      "c",
+      function()
+        vim.cmd('let @"=" "')
+        chat.toggle()
+      end,
+    },
   }
 )

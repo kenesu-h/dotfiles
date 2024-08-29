@@ -141,6 +141,30 @@ require("lazy").setup({
     end,
   },
 
+  -- AI Assistance
+  {
+    "github/copilot.vim",
+    config = function()
+      vim.g.copilot_no_tab_map = true
+
+      vim.keymap.set("i", "<Right>", 'copilot#Accept("\\<CR>")', {
+        expr = true,
+        replace_keycodes = false,
+      })
+    end,
+  },
+  {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    branch = "canary",
+    dependencies = {
+      { "github/copilot.vim" },
+      { "nvim-lua/plenary.nvim" },
+    },
+    config = function()
+      require("CopilotChat").setup()
+    end,
+  },
+
   -- Other
   {
     "aserowy/tmux.nvim",
