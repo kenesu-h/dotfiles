@@ -123,6 +123,7 @@ function cloud-sql-proxy() {
 
 # Aliases
 alias nvimdiff="nvim -d"
+alias nvim-config="nvim ~/.config/nvim"
 
 # https://stackoverflow.com/a/65375231
 function fzcd() {
@@ -150,6 +151,10 @@ function jqfmt() {
   fi
 
   jq . "$1" | sponge "$1"
+}
+
+function docker-compose() {
+  docker compose "$@"
 }
 
 function venv() {

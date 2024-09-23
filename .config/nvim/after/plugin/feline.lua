@@ -2,9 +2,9 @@ local feline = require("feline")
 local rose_pine = require("rose-pine.palette")
 
 local Separator = {
-  LEFT = " ",
+  LEFT = "█",
   MIDDLE = "█",
-  RIGHT = " ",
+  RIGHT = "█",
 }
 
 local FelineColor = {
@@ -161,12 +161,12 @@ components.diagnostic_info = {
 
 local cursor = require("feline.providers.cursor")
 components.cursor_icon = {
-  provider = "󰈔",
+  provider = "",
   hl = {
     fg = FelineColor.BLACK,
     bg = FelineColor.GREEN,
   },
-  left_sep = Separator.LEFT,
+  left_sep = " " .. Separator.LEFT,
   right_sep = Separator.MIDDLE,
 }
 
