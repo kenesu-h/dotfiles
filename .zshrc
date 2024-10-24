@@ -26,6 +26,7 @@ source "$HOME/.antidote/antidote.zsh"
 antidote load ${ZDOTDIR:-$HOME}/.zsh_plugins.txt
 
 export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
+export BOB_CONFIG="$HOME/.config/bob/config.json"
 
 # Lazy-loaded Tools
 function load_thefuck() {
