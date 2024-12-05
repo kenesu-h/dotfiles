@@ -208,14 +208,12 @@ require("lazy").setup({
     end,
   },
   {
-    "ggandor/leap.nvim",
+    "rlane/pounce.nvim",
     config = function()
-      local leap = require("leap")
-      leap.add_default_mappings()
-      leap.opts.safe_labels = {}
+      local pounce = require("pounce")
 
       vim.keymap.set({ "n", "v", "o" }, "s", function()
-        leap.leap({ target_windows = { vim.api.nvim_get_current_win() } })
+        pounce.pounce({})
         vim.cmd("normal! zz")
       end)
     end,
@@ -224,6 +222,18 @@ require("lazy").setup({
     "windwp/nvim-autopairs",
     event = "InsertEnter",
     opts = {},
+  },
+  {
+    "sphamba/smear-cursor.nvim",
+    opts = {},
+  },
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    opts = {
+      words = { enabled = true },
+    },
   },
   {
     "folke/neodev.nvim",
