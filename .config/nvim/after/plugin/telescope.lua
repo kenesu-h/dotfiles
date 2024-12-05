@@ -9,7 +9,7 @@ local TelescopeColors = {
   TelescopeMatching = { fg = rose_pine.rose },
   TelescopeSelection = { fg = rose_pine.text, bg = rose_pine.highlight_med },
 
-  TelescopePromptPrefix = { bg = rose_pine.surface },
+  TelescopePromptPrefix = { bg = rose_pine.overlay },
   TelescopePromptNormal = { bg = rose_pine.overlay },
   TelescopeResultsNormal = { bg = rose_pine.surface },
   TelescopePreviewNormal = { bg = rose_pine.surface },
@@ -43,6 +43,7 @@ telescope.setup({
         width = width,
         height = height,
       },
+      flip_columns = 120,
     },
     mappings = {
       n = history_mappings,

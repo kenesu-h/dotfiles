@@ -1,5 +1,4 @@
 {
-  "Comment.nvim": { "branch": "master", "commit": "0236521ea582747b58869cb72f70ccfa967d2e89" },
   "CopilotChat.nvim": { "branch": "canary", "commit": "1a92bb6d69b35bbfe32a57f81dc4f254abb56352" },
   "LuaSnip": { "branch": "master", "commit": "1f4ad8bb72bdeb60975e98652636b991a9b7475d" },
   "cmp-nvim-lsp": { "branch": "main", "commit": "44b16d11215dce86f253ce0c30949813c0a90765" },
@@ -8,7 +7,6 @@
   "copilot.vim": { "branch": "release", "commit": "a9fa7946d7307ceb138bfe2706ba75febf6450da" },
   "feline.nvim": { "branch": "main", "commit": "6cfbe0608d2552a7d947c6f521670b10379fbe42" },
   "gitsigns.nvim": { "branch": "main", "commit": "af0f583cd35286dd6f0e3ed52622728703237e50" },
-  "grapple.nvim": { "branch": "main", "commit": "89039013f6092053f1a45dd1abbc946ffc3d9f80" },
   "hydra.nvim": { "branch": "main", "commit": "1ce9ee35d2b869241091c0c7496c3cf0f3be981e" },
   "lazy.nvim": { "branch": "main", "commit": "96584866b9c5e998cbae300594d0ccfd0c464627" },
   "leap.nvim": { "branch": "main", "commit": "b6ae80f8fc9993638608fc1a51c6ab0eeb12618c" },
@@ -27,6 +25,6 @@
   "rose-pine": { "branch": "main", "commit": "17b466e79479758b332a3cac12544a3ad2be6241" },
   "statuscol.nvim": { "branch": "main", "commit": "3b629754420919575a9e5758027d6e1831dbf2aa" },
   "tabby.nvim": { "branch": "main", "commit": "9e537762cbb7647357eab22c61c7c5dda00138dd" },
-  "telescope.nvim": { "branch": "master", "commit": "776b509f80dd49d8205b9b0d94485568236d1192" },
+  "telescope.nvim": { "branch": "master", "commit": "a0bbec21143c7bc5f8bb02e0005fa0b982edc026" },
   "tmux.nvim": { "branch": "main", "commit": "ea67d59721eb7e12144ce2963452e869bfd60526" }
 }

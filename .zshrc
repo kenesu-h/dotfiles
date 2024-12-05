@@ -190,8 +190,15 @@ function rmvenv() {
   if [ -n "$VIRTUAL_ENV" ]; then
     deactivate
   fi
-  [ -d ".venv" ] && rm -r .venv
+
+  if [ -d ".venv" ]; then
+    rm -r .venv
+  fi
 }
+
+if [ -n "$CORP_ENV" ]; then
+  source "$HOME/.config/corp/.zshrc"
+fi
 
 # Run `p10k configure` to customize
 [[ ! -f "$HOME/.p10k.zsh" ]] || source "$HOME/.p10k.zsh"

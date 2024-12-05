@@ -36,7 +36,7 @@ require("lazy").setup({
   -- Telescope
   {
     "nvim-telescope/telescope.nvim",
-    tag = "0.1.2",
+    tag = "0.1.8",
     dependencies = { "nvim-lua/plenary.nvim" },
   },
 
@@ -145,6 +145,7 @@ require("lazy").setup({
   {
     "github/copilot.vim",
     config = function()
+      vim.g.copilot_enabled = false
       vim.g.copilot_no_tab_map = true
 
       vim.keymap.set("i", "<Right>", 'copilot#Accept("\\<CR>")', {
@@ -220,22 +221,9 @@ require("lazy").setup({
     end,
   },
   {
-    "cbochs/grapple.nvim",
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
-    },
-  },
-  {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
     opts = {},
-  },
-  {
-    "numToStr/Comment.nvim",
-    config = function()
-      require("Comment").setup()
-    end,
-    lazy = false,
   },
   {
     "folke/neodev.nvim",

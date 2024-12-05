@@ -4,7 +4,6 @@ local project = {}
 local util = require("hydras.util")
 
 local builtin = require("telescope.builtin")
-local grapple = require("grapple")
 
 --- @type fun():nil
 project.hydra = util.activator(util.base_hydra(
@@ -14,9 +13,6 @@ _f_: files
 _g_: grep
 _s_: symbols
 _r_: resume
-
-_t_: tags
-_m_: mark
 
 _y_: yank current path
 
@@ -35,10 +31,6 @@ _<Esc>_
       end,
     },
     { "r", builtin.resume },
-
-    { "t", grapple.toggle_tags },
-    { "m", grapple.toggle },
-
     {
       "y",
       function()
