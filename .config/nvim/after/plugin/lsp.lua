@@ -1,78 +1,13 @@
--- https://github.com/neovim/neovim/issues/23725#issuecomment-1561364086
-local ok, wf = pcall(require, "vim.lsp._watchfiles")
-if ok then
-  -- disable lsp watcher. Too slow on linux
-  wf._watchfunc = function()
-    return function() end
-  end
-end
-
-require("neodev").setup({})
-
-local lsp = require("lsp-zero").preset({})
-local lspconfig = require("lspconfig")
-
-local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end
-
-local node_lib = function()
-  local handle = io.popen("npm list -g | head -1")
-  if not handle then
-    return nil
-  end
-
-  local result = handle:read("*a")
-  handle:close()
-
-  return result:gsub("[\n\r]", "")
-end
-
-lspconfig.tsserver.setup({
-  init_options = {
-    preferences = {
-      importModuleSpecifier = "non-relative",
-    },
-    plugins = {
-      {
-        name = "@vue/typescript-plugin",
-        location = node_lib() .. "/node_modules/@vue/typescript-plugin",
-        languages = { "typescript", "vue" },
-      },
-    },
-  },
-  filetypes = {
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "vue",
-  },
-})
-
-lsp.setup()
-
-require("mason").setup({})
-require("mason-lspconfig").setup({
-  ensure_installed = {
-    "lua_ls",
-    "pyright",
-    "tsserver",
-  },
-})
-
 local cmp = require("cmp")
+local cmp_nvim_lsp = require("cmp_nvim_lsp")
+local lspconfig = require("lspconfig")
 local luasnip = require("luasnip")
-
-vim.diagnostic.config({
-  float = {
-    border = "single",
-  },
-})
-
+local mason = require("mason")
+local mason_lspconfig = require("mason-lspconfig")
 local rose_pine = require("rose-pine.palette")
+local snippets_from_vscode = require("luasnip.loaders.from_vscode")
+
+-- Setup appearance
 local CmpColors = {
   Pmenu = { bg = rose_pine.surface },
   PmenuSel = { fg = rose_pine.rose, bg = rose_pine.overlay },
@@ -81,12 +16,45 @@ local CmpColors = {
   FloatBorder = { bg = rose_pine.surface },
 }
 
+vim.diagnostic.config({
+  virtual_text = false,
+  float = {
+    border = "single",
+  },
+})
+
 for hl, col in pairs(CmpColors) do
   vim.api.nvim_set_hl(0, hl, col)
 end
 
+local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+
+-- Setup LSP and snippets
+mason.setup({})
+mason_lspconfig.setup({
+  ensure_installed = {
+    "lua_ls",
+    "basedpyright",
+    "ts_ls",
+  },
+  handlers = {
+    function(server)
+      lspconfig[server].setup({
+        capabilities = cmp_nvim_lsp.default_capabilities(),
+      })
+    end,
+  },
+})
+
+snippets_from_vscode.lazy_load()
+
+-- Setup auto-completion
 local has_words_before = function()
-  if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
+  if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt" then
     return false
   end
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -123,19 +91,19 @@ cmp.setup({
       behavior = cmp.ConfirmBehavior.Replace,
     }),
   }),
-  sorting = {
-    comparators = {
-      cmp.config.compare.exact,
-      cmp.config.compare.offset,
-      cmp.config.compare.score,
-      cmp.config.compare.recently_used,
-      cmp.config.compare.locality,
-      cmp.config.compare.kind,
-      cmp.config.compare.sort_text,
-      cmp.config.compare.length,
-      cmp.config.compare.order,
-    },
-  },
+  -- sorting = {
+  --   comparators = {
+  --     cmp.config.compare.exact,
+  --     cmp.config.compare.offset,
+  --     cmp.config.compare.score,
+  --     cmp.config.compare.recently_used,
+  --     cmp.config.compare.locality,
+  --     cmp.config.compare.kind,
+  --     cmp.config.compare.sort_text,
+  --     cmp.config.compare.length,
+  --     cmp.config.compare.order,
+  --   },
+  -- },
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)
@@ -143,5 +111,7 @@ cmp.setup({
   },
   sources = cmp.config.sources({
     { name = "nvim_lsp" },
+    { name = "luasnip" },
+    { name = "lazydev" },
   }),
 })

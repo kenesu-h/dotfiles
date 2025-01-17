@@ -1,4 +1,5 @@
 local rose_pine = require("rose-pine.palette")
+local tabline = require("tabby.tabline")
 
 local TabbyColors = {
   TabLine = { bg = rose_pine.none },
@@ -21,7 +22,7 @@ local function tab_modified(tab)
   return false
 end
 
-require("tabby.tabline").set(function(line)
+tabline.set(function(line)
   ---@diagnostic disable-next-line: undefined-field
   local branch = vim.b.gitsigns_head or ""
 

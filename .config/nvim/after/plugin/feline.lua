@@ -1,12 +1,6 @@
 local feline = require("feline")
 local rose_pine = require("rose-pine.palette")
 
-local Separator = {
-  LEFT = "█",
-  MIDDLE = "█",
-  RIGHT = "█",
-}
-
 local FelineColor = {
   FG = "fg",
   BG = "bg",
@@ -34,7 +28,10 @@ local RosePineExtra = {
 local rose_pine_theme = {
   [FelineColor.FG] = rose_pine.text,
   [FelineColor.BG] = rose_pine.surface,
-  [FelineColor.BLACK] = rose_pine.base,
+
+  -- Modified version of rose_pine.base (+1 to blue), kitty will make this transparent if this equals the original
+  [FelineColor.BLACK] = "#232137",
+
   [FelineColor.WHITE] = rose_pine.text,
   [FelineColor.MAGENTA] = rose_pine.iris,
   [FelineColor.ORANGE] = rose_pine.rose,
@@ -52,6 +49,12 @@ local rose_pine_theme = {
   [RosePineExtra.HIGHLIGHT_LOW] = rose_pine.highlight_low,
   [RosePineExtra.HIGHLIGHT_MED] = rose_pine.highlight_med,
   [RosePineExtra.HIGHLIGHT_HIGH] = rose_pine.highlight_high,
+}
+
+local Separator = {
+  LEFT = "█",
+  MIDDLE = "█",
+  RIGHT = "█",
 }
 
 local components = {}

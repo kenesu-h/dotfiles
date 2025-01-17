@@ -1,15 +1,13 @@
 vim.g.mapleader = " "
 
-local REMAP_OPTS = {
-  noremap = true,
-  silent = true,
-}
-
 --- @param modes string | table
 --- @param lhs string
 --- @param rhs string | function
 local function remap(modes, lhs, rhs)
-  vim.keymap.set(modes, lhs, rhs, REMAP_OPTS)
+  vim.keymap.set(modes, lhs, rhs, {
+    noremap = true,
+    silent = true,
+  })
 end
 
 -- Thanks to ThePrimeagen (https://www.youtube.com/watch?v=w7i4amO_zaE)
@@ -46,6 +44,9 @@ remap({ "n", "v" }, "p", "P")
 remap({ "n", "v" }, "gp", "`[v`]")
 remap({ "n", "v", "o" }, "x", "d")
 remap({ "n", "v" }, "d", '"_d')
+
+remap({ "n", "v", "o" }, "c", '"_c')
+remap("n", "cc", "cc")
 
 remap({ "n", "v" }, "j", "jzz")
 remap({ "n", "v" }, "k", "kzz")

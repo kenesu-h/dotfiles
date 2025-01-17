@@ -1,14 +1,13 @@
 local actions = require("telescope.actions")
+local rose_pine = require("rose-pine.palette")
 local telescope = require("telescope")
 
 local width = 0.95
 local height = 0.95
 
-local rose_pine = require("rose-pine.palette")
 local TelescopeColors = {
   TelescopeMatching = { fg = rose_pine.rose },
   TelescopeSelection = { fg = rose_pine.text, bg = rose_pine.highlight_med },
-
   TelescopePromptPrefix = { bg = rose_pine.overlay },
   TelescopePromptNormal = { bg = rose_pine.overlay },
   TelescopeResultsNormal = { bg = rose_pine.surface },
@@ -30,6 +29,20 @@ local history_mappings = {
   ["<Down>"] = actions.cycle_history_next,
 }
 
+vim.keymap.set({ "n", "v", "o" }, "/", function()
+  vim.cmd("Telescope current_buffer_fuzzy_find case_mode=ignore_case")
+end, {
+  noremap = true,
+  silent = true,
+})
+
+vim.keymap.set({ "n", "v", "o" }, "?", function()
+  vim.cmd("Telescope current_buffer_fuzzy_find case_mode=ignore_case")
+end, {
+  noremap = true,
+  silent = true,
+})
+
 telescope.setup({
   defaults = {
     borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
@@ -43,7 +56,7 @@ telescope.setup({
         width = width,
         height = height,
       },
-      flip_columns = 120,
+      flip_columns = 160,
     },
     mappings = {
       n = history_mappings,

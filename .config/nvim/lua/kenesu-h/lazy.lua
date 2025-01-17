@@ -1,14 +1,21 @@
+-- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable",
-    lazypath,
-  })
+
+---@diagnostic disable-next-line: undefined-field
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
 end
+
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
@@ -29,6 +36,7 @@ require("lazy").setup({
           CursorLine = { bg = "none" },
         },
       })
+
       vim.cmd.colorscheme("rose-pine")
     end,
   },
@@ -36,54 +44,62 @@ require("lazy").setup({
   -- Telescope
   {
     "nvim-telescope/telescope.nvim",
+    event = "VeryLazy",
     tag = "0.1.8",
     dependencies = { "nvim-lua/plenary.nvim" },
+    -- Configured in telescope.lua
   },
 
-  -- Treesitter / LSP
+  -- Treesitter
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
+    -- Configured in treesitter.lua
   },
-  {
-    "nvim-treesitter/nvim-treesitter-context",
-    config = function()
-      local rose_pine = require("rose-pine")
-      local ContextColors = {
-        TreesitterContext = { bg = rose_pine.overlay },
-        TreesitterContextSeparator = { bg = rose_pine.base },
-      }
 
-      for hl, col in pairs(ContextColors) do
-        vim.api.nvim_set_hl(0, hl, col)
-      end
-
-      require("treesitter-context").setup({
-        enable = false,
-        separator = "─",
-      })
-    end,
-  },
+  -- LSP
   {
-    "VonHeikemen/lsp-zero.nvim",
-    branch = "v2.x",
+    "williamboman/mason-lspconfig.nvim",
     dependencies = {
-      -- LSP Support
       { "neovim/nvim-lspconfig" },
       { "williamboman/mason.nvim" },
-      { "williamboman/mason-lspconfig.nvim" },
+    },
+  },
 
-      -- Autocompletion
-      { "hrsh7th/nvim-cmp" },
+  {
+    "L3MON4D3/LuaSnip",
+    dependencies = {
+      { "rafamadriz/friendly-snippets" },
+    },
+  },
+
+  {
+    "hrsh7th/nvim-cmp",
+    dependencies = {
       { "hrsh7th/cmp-nvim-lsp" },
-      { "L3MON4D3/LuaSnip" },
       { "saadparwaiz1/cmp_luasnip" },
+    },
+  },
+  -- All configured in lsp.lua
+
+  -- Diagnostics
+  {
+    "rachartier/tiny-inline-diagnostic.nvim",
+    priority = 1000,
+    event = "BufReadPre",
+    opts = {
+      preset = "powerline",
+      options = {
+        show_source = true,
+        enable_on_insert = true,
+      },
     },
   },
 
   -- Formatter
   {
     "stevearc/conform.nvim",
+    event = "BufReadPre",
     config = function()
       local conform = require("conform")
       local js_formatters = { "eslint" }
@@ -105,6 +121,7 @@ require("lazy").setup({
   -- Linter
   {
     "mfussenegger/nvim-lint",
+    event = "BufReadPre",
     config = function()
       local lint = require("lint")
       local js_linters = { "eslint" }
@@ -129,23 +146,64 @@ require("lazy").setup({
   -- Git
   {
     "lewis6991/gitsigns.nvim",
-    config = function()
-      require("gitsigns").setup({
-        yadm = {
-          enable = true,
+    event = "BufReadPre",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      {
+        "purarue/gitsigns-yadm.nvim",
+        opts = {
+          shell_timeout_ms = 1000,
         },
-        current_line_blame_opts = {
-          delay = 0,
-        },
-      })
-    end,
+      },
+    },
+    opts = {
+      _on_attach_pre = function(_, callback)
+        require("gitsigns-yadm").yadm_signs(callback)
+      end,
+      current_line_blame_opts = {
+        delay = 0,
+      },
+    },
+  },
+
+  -- Refactoring
+  {
+    "MagicDuck/grug-far.nvim",
+    event = "VeryLazy",
+    opts = {
+      keymaps = {
+        replace = { n = "<leader><C-e>" },
+        openLocation = { n = "<leader><C-o>" },
+        refresh = { n = "<leader><C-r>" },
+        help = { n = "g?" },
+
+        qflist = false,
+        syncLocations = false,
+        syncLine = false,
+        close = false,
+        historyOpen = false,
+        historyAdd = false,
+        openNextLocation = false,
+        openPrevLocation = false,
+        gotoLocation = false,
+        pickHistoryEntry = false,
+        abort = false,
+        toggleShowCommand = false,
+        swapEngine = false,
+        previewLocation = false,
+        swapReplacementInterpreter = false,
+        applyNext = false,
+        applyPrev = false,
+      },
+    },
   },
 
   -- AI Assistance
   {
     "github/copilot.vim",
+    event = "InsertEnter",
     config = function()
-      vim.g.copilot_enabled = false
+      vim.g.copilot_enabled = true
       vim.g.copilot_no_tab_map = true
 
       vim.keymap.set("i", "<Right>", 'copilot#Accept("\\<CR>")', {
@@ -154,31 +212,22 @@ require("lazy").setup({
       })
     end,
   },
-  {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    branch = "canary",
-    dependencies = {
-      { "github/copilot.vim" },
-      { "nvim-lua/plenary.nvim" },
-    },
-    config = function()
-      require("CopilotChat").setup()
-    end,
-  },
 
   -- Other
   {
     "aserowy/tmux.nvim",
-    config = function()
-      require("tmux").setup({
-        copy_sync = {
-          enable = true,
-          redirect_to_clipboard = true,
-        },
-      })
-    end,
+    event = "VeryLazy",
+    opts = {
+      copy_sync = {
+        enable = true,
+        redirect_to_clipboard = true,
+      },
+    },
   },
-  { "nvimtools/hydra.nvim" },
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+  },
   {
     "freddiehaddad/feline.nvim",
     dependencies = {
@@ -187,35 +236,23 @@ require("lazy").setup({
   },
   { "nanozuki/tabby.nvim" },
   {
-    "luukvbaal/statuscol.nvim",
-    config = function()
-      local builtin = require("statuscol.builtin")
-      require("statuscol").setup({
-        relculright = true,
-        segments = {
-          { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
-          {
-            sign = { name = { "Diagnostic" }, mawidth = 1, colwidth = 2 },
-            click = "v:lua.ScSa",
-          },
-          { text = { builtin.lnumfunc }, click = "v:lua.ScLa" },
-          {
-            sign = { namespace = { "gitsigns" }, maxwidth = 1, colwidth = 2 },
-            click = "v:lua.ScSa",
-          },
-        },
-      })
-    end,
+    "lukas-reineke/virt-column.nvim",
+    event = "BufReadPre",
+    opts = {},
   },
   {
     "rlane/pounce.nvim",
+    event = "BufReadPre",
     config = function()
       local pounce = require("pounce")
 
       vim.keymap.set({ "n", "v", "o" }, "s", function()
         pounce.pounce({})
         vim.cmd("normal! zz")
-      end)
+      end, {
+        noremap = true,
+        silent = true,
+      })
     end,
   },
   {
@@ -224,19 +261,19 @@ require("lazy").setup({
     opts = {},
   },
   {
-    "sphamba/smear-cursor.nvim",
-    opts = {},
-  },
-  {
     "folke/snacks.nvim",
     priority = 1000,
-    lazy = false,
+    event = "BufReadPre",
     opts = {
+      rename = { enabled = true },
+      statuscolumn = { enabled = true },
       words = { enabled = true },
     },
   },
   {
-    "folke/neodev.nvim",
+    "folke/lazydev.nvim",
+    ft = "lua",
+    event = "VeryLazy",
     opts = {},
   },
 })
