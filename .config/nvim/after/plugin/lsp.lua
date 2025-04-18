@@ -7,21 +7,14 @@ local mason_lspconfig = require("mason-lspconfig")
 local rose_pine = require("rose-pine.palette")
 local snippets_from_vscode = require("luasnip.loaders.from_vscode")
 
--- Setup appearance
 local CmpColors = {
   Pmenu = { bg = rose_pine.surface },
   PmenuSel = { fg = rose_pine.rose, bg = rose_pine.overlay },
-
   NormalFloat = { bg = rose_pine.surface },
   FloatBorder = { bg = rose_pine.surface },
 }
 
-vim.diagnostic.config({
-  virtual_text = false,
-  float = {
-    border = "single",
-  },
-})
+vim.diagnostic.config({ virtual_text = false })
 
 for hl, col in pairs(CmpColors) do
   vim.api.nvim_set_hl(0, hl, col)
@@ -40,11 +33,19 @@ mason_lspconfig.setup({
     "lua_ls",
     "basedpyright",
     "ts_ls",
+    "harper_ls",
   },
   handlers = {
     function(server)
       lspconfig[server].setup({
         capabilities = cmp_nvim_lsp.default_capabilities(),
+        settings = {
+          basedpyright = {
+            analysis = {
+              typeCheckingMode = "standard",
+            },
+          },
+        },
       })
     end,
   },
@@ -64,11 +65,6 @@ end
 -- https://www.reddit.com/r/neovim/comments/wmkf9o/how_to_use_tab_and_shifttab_to_cycle_through/
 -- https://www.reddit.com/r/neovim/comments/z9os8x/strange_behaviour_cursor_jumping_with_tabkey/
 cmp.setup({
-  window = {
-    documentation = {
-      border = "single",
-    },
-  },
   mapping = cmp.mapping.preset.insert({
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() and has_words_before() then
@@ -91,19 +87,6 @@ cmp.setup({
       behavior = cmp.ConfirmBehavior.Replace,
     }),
   }),
-  -- sorting = {
-  --   comparators = {
-  --     cmp.config.compare.exact,
-  --     cmp.config.compare.offset,
-  --     cmp.config.compare.score,
-  --     cmp.config.compare.recently_used,
-  --     cmp.config.compare.locality,
-  --     cmp.config.compare.kind,
-  --     cmp.config.compare.sort_text,
-  --     cmp.config.compare.length,
-  --     cmp.config.compare.order,
-  --   },
-  -- },
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)

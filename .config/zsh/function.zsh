@@ -4,11 +4,11 @@ alias nvim-config="nvim ~/.config/nvim"
 # https://stackoverflow.com/a/65375231
 function fzcd() {
   if [ -z "$1" ]; then
-    cd "$(fd . --type d --base-directory=. | fzf)"
+    cd "$(fd . --type d | fzf)"
     return
   fi
 
-  cd "$(fd . --type d --base-directory="$1" | fzf)"
+  cd "$(fd . $1 --type d | fzf)"
 }
 
 function fzcdroot() {
@@ -71,3 +71,7 @@ function rmvenv() {
   fi
 }
 
+function gcloud-project() {
+  gcloud auth application-default set-quota-project $1
+  gcloud config set project $1
+}

@@ -41,13 +41,27 @@ require("lazy").setup({
     end,
   },
 
-  -- Telescope
+  -- File Explorer
   {
-    "nvim-telescope/telescope.nvim",
-    event = "VeryLazy",
-    tag = "0.1.8",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    -- Configured in telescope.lua
+    "stevearc/oil.nvim",
+    tag = "v2.15.0",
+    opts = {
+      watch_for_changes = true,
+    },
+  },
+
+  -- Snacks
+  {
+    "folke/snacks.nvim",
+    tag = "v2.22.0",
+    priority = 1000,
+    event = "BufReadPre",
+    opts = {
+      picker = { enabled = true },
+      rename = { enabled = true },
+      statuscolumn = { enabled = true },
+      words = { enabled = true },
+    },
   },
 
   -- Treesitter
@@ -259,16 +273,6 @@ require("lazy").setup({
     "windwp/nvim-autopairs",
     event = "InsertEnter",
     opts = {},
-  },
-  {
-    "folke/snacks.nvim",
-    priority = 1000,
-    event = "BufReadPre",
-    opts = {
-      rename = { enabled = true },
-      statuscolumn = { enabled = true },
-      words = { enabled = true },
-    },
   },
   {
     "folke/lazydev.nvim",
