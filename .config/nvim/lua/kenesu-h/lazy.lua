@@ -47,6 +47,9 @@ require("lazy").setup({
     tag = "v2.15.0",
     opts = {
       watch_for_changes = true,
+      view_options = {
+        show_hidden = true,
+      },
     },
   },
 
